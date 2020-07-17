@@ -16,7 +16,7 @@ public class ListeController {
     public String listele(Model model){
 
         System.out.println("++++++++++++++++" + malzemeRepository.findAll().get(1).toString());
-      //  model.addAttribute("malzemelist",malzemeRepository.findAll());
+        model.addAttribute("malzemelist",malzemeRepository.findAll());
 
         return "liste";
     }

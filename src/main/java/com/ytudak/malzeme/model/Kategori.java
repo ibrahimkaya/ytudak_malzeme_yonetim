@@ -16,7 +16,7 @@ public class Kategori {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "kategori")
+    @OneToMany(mappedBy = "kategori", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Malzeme> malzemeList = new ArrayList<>();
 
     private String kategori;
@@ -70,5 +70,11 @@ public class Kategori {
         return result;
     }
 
-
+    @Override
+    public String toString() {
+        return "Kategori{" +
+                "id=" + id +
+                ", kategori='" + kategori + '\'' +
+                '}';
+    }
 }

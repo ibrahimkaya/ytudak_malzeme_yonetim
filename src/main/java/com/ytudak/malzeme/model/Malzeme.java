@@ -138,5 +138,17 @@ public class Malzeme {
         return result;
     }
 
-
+    @Override
+    public String toString() {
+        return "Malzeme{" +
+                "id=" + id +
+                ", kategori=" + kategori +
+                ", tip='" + tip + '\'' +
+                ", model='" + model + '\'' +
+                ", isim='" + isim + '\'' +
+                ", numara_boy='" + numara_boy + '\'' +
+                ", durum_not='" + durum_not + '\'' +
+                ", aktiflik=" + aktiflik +
+                '}';
+    }
 }
