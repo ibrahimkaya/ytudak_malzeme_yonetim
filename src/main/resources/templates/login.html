@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css">
+    <title>Login</title>
+</head>
+<body class="text-center">
+    <form class="form-signin" th:action="@{/login}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal text-center">Sign in</h1>
+
+        <br>
+        <h6 class="h6 mb-3 font-weight-normal text-center" th:if="${param.error}" style="color: red;">Invalid username or password.</h6>
+        <h6 class="h6 mb-3 font-weight-normal text-center" th:if="${param.logout}">You have been logged out.</h6>
+
+
+        <label for="username" class="sr-only">Username:</label>
+        <input type="username" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
+
+        <label for="password" class="sr-only">Password:</label><br>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br>
+
+        <p class="mt-5 mb-3 text-muted text-center">&copy; Ytudak aak</p>
+    </form>
+</body>
+</html>

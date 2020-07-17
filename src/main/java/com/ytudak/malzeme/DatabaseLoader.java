@@ -2,9 +2,11 @@ package com.ytudak.malzeme;
 
 import com.ytudak.malzeme.model.Kategori;
 import com.ytudak.malzeme.model.Malzeme;
+import com.ytudak.malzeme.model.User;
 import com.ytudak.malzeme.model.Zimmet;
 import com.ytudak.malzeme.repository.KategoriRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
+import com.ytudak.malzeme.repository.UserRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,12 +18,14 @@ public class DatabaseLoader implements CommandLineRunner {
     private final KategoriRepository kategoriRepository;
     private final MalzemeRepository malzemeRepository;
     private final ZimmetRepository zimmetRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public DatabaseLoader(KategoriRepository kategoriRepository, MalzemeRepository malzemeRepository, ZimmetRepository zimmetRepository) {
+    public DatabaseLoader(KategoriRepository kategoriRepository, MalzemeRepository malzemeRepository, ZimmetRepository zimmetRepository,UserRepository userRepository) {
         this.kategoriRepository = kategoriRepository;
         this.malzemeRepository = malzemeRepository;
         this.zimmetRepository = zimmetRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -33,5 +37,7 @@ public class DatabaseLoader implements CommandLineRunner {
         this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "String tip", "String marka", "String isim", "String numara_boy", "String durum_not", false));
         //(String alanKisi, String verenMalzemeci, , String verilmeNot)
         this.zimmetRepository.save( new Zimmet(1L,"ufuk","ibo","kazma ucları ile beraber verildi"));
+
+        this.userRepository.save(new User("admin","admin",true,"ROLE_ADMIN"));
     }
 }
