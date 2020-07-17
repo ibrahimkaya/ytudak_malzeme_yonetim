@@ -12,7 +12,6 @@ import javax.persistence.Id;
 @Entity
 public class User  {
 
-    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
@@ -21,7 +20,7 @@ public class User  {
     private @JsonIgnore String password;
 
     public void setPassword(String password) {
-        this.password = PASSWORD_ENCODER.encode(password);
+        this.password = password;
     }
 
     private boolean active;

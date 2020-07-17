@@ -10,6 +10,7 @@ import com.ytudak.malzeme.repository.UserRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,6 +39,6 @@ public class DatabaseLoader implements CommandLineRunner {
         //(String alanKisi, String verenMalzemeci, , String verilmeNot)
         this.zimmetRepository.save( new Zimmet(1L,"ufuk","ibo","kazma ucları ile beraber verildi"));
 
-        this.userRepository.save(new User("admin","admin",true,"ROLE_ADMIN"));
+        this.userRepository.save(new User("admin",new BCryptPasswordEncoder().encode("admin"),true,"ROLE_ADMIN"));
     }
 }
