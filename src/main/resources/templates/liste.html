@@ -46,14 +46,46 @@
 
             </tr>
             </tbody>
+            <tfoot>
+            <tr>
+                <th> kategori </th>
+                <th> Tip </th>
+                <th> Model </th>
+                <th> isim </th>
+                <th> numara-boy </th>
+                <th> not </th>
+                <th>  Zimmet Durumu</th>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('#myTable').DataTable();
-    });
+    $(document).ready(function() {
+        $('#myTable').DataTable( {
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
+    } );
 </script>
 
 </body>
