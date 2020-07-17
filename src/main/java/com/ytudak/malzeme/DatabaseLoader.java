@@ -33,12 +33,19 @@ public class DatabaseLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.printf("");
         this.kategoriRepository.save(new Kategori("ip"));
+        this.kategoriRepository.save(new Kategori("cam"));
+        this.kategoriRepository.save(new Kategori("cadir"));
         //(Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik)
         this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "String tip", "String marka", "String isim", "String numara_boy", "String durum_not", true));
         this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "String tip", "String marka", "String isim", "String numara_boy", "String durum_not", false));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "ip 1", "String marka", "String isim", "String numara_boy", "String durum_not", false));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "ip2", "String marka", "String isim", "String numara_boy", "String durum_not", false));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(3)).get(), " cadir", "String marka", "String isim", "String numara_boy", "String durum_not", false));
         //(String alanKisi, String verenMalzemeci, , String verilmeNot)
         this.zimmetRepository.save( new Zimmet(1L,"ufuk","ibo","kazma ucları ile beraber verildi"));
 
         this.userRepository.save(new User("admin",new BCryptPasswordEncoder().encode("admin"),true,"ROLE_ADMIN"));
+        this.userRepository.save(new User("user",new BCryptPasswordEncoder().encode("123"),true,"ROLE_USER"));
+
     }
 }

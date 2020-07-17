@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src = "//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"> </script>
+        <title>malzeme listeleri</title>
+    </head>
+<body>
+<div th:insert="header:: menu"></div>
+<div class="table-responsive">
+<table id = "myTable" class = "table table-striped" >
+    <thead>
+        <tr>      <!--  Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik) -->
+            <td scope=" col"> kategori </td>
+            <td scope=" col"> tip</td>
+            <td scope=" col">model</td>
+            <td scope=" col">isim</td>
+            <td scope=" col">numara boy</td>
+            <td scope=" col">not</td>
+            <td scope=" col">zimmet durumu</td>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:each="malzeme:${malzemelist}"></tr>
+    <tr>
+        <td th:text="${malzeme.kategori.kategori}"></td>
+        <td th:text="${malzeme.tip}"></td>
+        <td th:text="${malzeme.model}"></td>
+        <td th:text="${malzeme.isim}"></td>
+        <td th:text="${malzeme.numara_boy}"></td>
+        <td th:text="${malzeme.durum_not}"></td>
+        <td th:text="${malzeme.aktiflik}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
+</body>
+</html>

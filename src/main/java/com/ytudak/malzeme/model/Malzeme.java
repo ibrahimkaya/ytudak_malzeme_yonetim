@@ -23,7 +23,7 @@ public class Malzeme {
     @Value("")
     private String tip;
     @Value("")
-    private String marka;
+    private String model;
     @Value("")
     private String isim;
     @Value("")
@@ -36,10 +36,10 @@ public class Malzeme {
     public Malzeme() {
     }
 
-    public Malzeme(Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik) {
+    public Malzeme(Kategori kategori, String tip, String model, String isim, String numara_boy, String durum_not, Boolean aktiflik) {
         this.kategori = kategori;
         this.tip = tip;
-        this.marka = marka;
+        this.model = model;
         this.isim = isim;
         this.numara_boy = numara_boy;
         this.durum_not = durum_not;
@@ -68,12 +68,12 @@ public class Malzeme {
         this.tip = tip;
     }
 
-    public String getMarka() {
-        return marka;
+    public String getModel() {
+        return model;
     }
 
-    public void setMarka(String marka) {
-        this.marka = marka;
+    public void setModel(String marka) {
+        this.model = marka;
     }
 
     public String getIsim() {
@@ -118,7 +118,7 @@ public class Malzeme {
         if (!id.equals(malzeme.id)) return false;
         if (!kategori.equals(malzeme.kategori)) return false;
         if (tip != null ? !tip.equals(malzeme.tip) : malzeme.tip != null) return false;
-        if (marka != null ? !marka.equals(malzeme.marka) : malzeme.marka != null) return false;
+        if (model != null ? !model.equals(malzeme.model) : malzeme.model != null) return false;
         if (isim != null ? !isim.equals(malzeme.isim) : malzeme.isim != null) return false;
         if (numara_boy != null ? !numara_boy.equals(malzeme.numara_boy) : malzeme.numara_boy != null) return false;
         if (durum_not != null ? !durum_not.equals(malzeme.durum_not) : malzeme.durum_not != null) return false;
@@ -130,7 +130,7 @@ public class Malzeme {
         int result = id.hashCode();
         result = 31 * result + kategori.hashCode();
         result = 31 * result + (tip != null ? tip.hashCode() : 0);
-        result = 31 * result + (marka != null ? marka.hashCode() : 0);
+        result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (isim != null ? isim.hashCode() : 0);
         result = 31 * result + (numara_boy != null ? numara_boy.hashCode() : 0);
         result = 31 * result + (durum_not != null ? durum_not.hashCode() : 0);
@@ -138,17 +138,5 @@ public class Malzeme {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Malzeme{" +
-                "id=" + id +
-                ", kategori=" + kategori +
-                ", tip='" + tip + '\'' +
-                ", marka='" + marka + '\'' +
-                ", isim='" + isim + '\'' +
-                ", numara_boy='" + numara_boy + '\'' +
-                ", durum_not='" + durum_not + '\'' +
-                ", aktiflik=" + aktiflik +
-                '}';
-    }
+
 }

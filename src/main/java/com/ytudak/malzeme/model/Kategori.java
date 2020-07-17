@@ -70,12 +70,5 @@ public class Kategori {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Kategori{" +
-                "id=" + id +
-                ", malzemeList=" + malzemeList +
-                ", kategori='" + kategori + '\'' +
-                '}';
-    }
+
 }
