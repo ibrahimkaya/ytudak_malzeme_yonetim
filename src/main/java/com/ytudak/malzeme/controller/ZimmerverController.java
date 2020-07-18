@@ -1,10 +1,12 @@
 package com.ytudak.malzeme.controller;
 
+import com.ytudak.malzeme.model.Zimmet;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ZimmerverController {
@@ -20,4 +22,9 @@ public class ZimmerverController {
         return "zimmetver";
     }
 
+    @PostMapping("/zimmetver/zimmetle")
+    public String zimmetle(Zimmet zimmet){
+        System.out.println(zimmet);
+        return "redirect:/anasayfa";
+    }
 }

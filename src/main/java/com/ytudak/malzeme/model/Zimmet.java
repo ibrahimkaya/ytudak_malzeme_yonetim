@@ -4,6 +4,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
 /*
 
 Bir kullanıcının kulüpten malzeme aldığında oluşan kayıdın tutulduğu model
@@ -17,6 +19,11 @@ public class Zimmet {
     private Long id;
 
     private Long malzemeNo;
+
+    // veri tabanında olusmayacak
+    // formda gonderilen malzeme id lerini tutmasi icin var sadece
+    @Transient
+    private String malzemeNoList;
 
     private String alanKisi;
 
@@ -32,11 +39,17 @@ public class Zimmet {
     public Zimmet() {
     }
 
-    public Zimmet( Long malzemeNo ,String alanKisi, String verenMalzemeci, String verilmeNot) {
+    public Zimmet(Long malzemeNo, String alanKisi, String verenMalzemeci, String verilmeNot) {
         this.alanKisi = alanKisi;
         this.verenMalzemeci = verenMalzemeci;
         this.verilmeNot = verilmeNot;
         this.malzemeNo = malzemeNo;
+    }
+
+    public Zimmet(String malzemeNoList, String alanKisi, String verenMalzemeci) {
+        this.malzemeNoList = malzemeNoList;
+        this.alanKisi = alanKisi;
+        this.verenMalzemeci = verenMalzemeci;
     }
 
     public Long getMalzemeNo() {
@@ -51,6 +64,13 @@ public class Zimmet {
         return id;
     }
 
+    public String getMalzemeNoList() {
+        return malzemeNoList;
+    }
+
+    public void setMalzemeNoList(String malzemeNoList) {
+        this.malzemeNoList = malzemeNoList;
+    }
 
     public String getAlanKisi() {
         return alanKisi;
@@ -112,6 +132,8 @@ public class Zimmet {
     public String toString() {
         return "Zimmet{" +
                 "id=" + id +
+                ", malzemeNo=" + malzemeNo +
+                ", malzemeNoList='" + malzemeNoList + '\'' +
                 ", alanKisi='" + alanKisi + '\'' +
                 ", verenMalzemeci='" + verenMalzemeci + '\'' +
                 ", verilmeTarihi=" + verilmeTarihi +

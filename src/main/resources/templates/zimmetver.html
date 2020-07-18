@@ -24,8 +24,6 @@ controllera geç
 
 -->
 <div th:insert="header:: menu"></div>
-<form action="" method="post">
-
 <div class="container">
     <h2>Malzemeler</h2>
     <div class="table-responsive">
@@ -43,9 +41,9 @@ controllera geç
                 <td scope=" col">Zimmet Durumu</td>
             </tr>
             </thead>
-            <tbody id ="malzemeBody">
+            <tbody id="malzemeBody">
             <tr th:each="malzeme:${malzemelist}">
-                <td th:text="${malzeme.id}" name = "id"></td>
+                <td th:text="${malzeme.id}" name="id"></td>
                 <td th:text="${malzeme.kategori.kategori}"></td>
                 <td th:text="${malzeme.tip}"></td>
                 <td th:text="${malzeme.model}"></td>
@@ -62,63 +60,89 @@ controllera geç
             <tfoot>
             <tr>
                 <th></th>
-                <th> kategori </th>
-                <th> Tip </th>
-                <th> Model </th>
-                <th> isim </th>
-                <th> numara-boy </th>
-                <th> not </th>
+                <th> kategori</th>
+                <th> Tip</th>
+                <th> Model</th>
+                <th> isim</th>
+                <th> numara-boy</th>
+                <th> not</th>
                 <th> Zimmet Durumu</th>
             </tr>
             </tfoot>
         </table>
     </div>
-    <button type="button" id = "button">Click Me!</button>
+
+    <form th:action="@{/zimmetver/zimmetle}" method="post" id="zimmetForm">
+        <div class="form-group">
+            <label for="alanKisi">Alan Kisi</label>
+            <input class="form-control" type="text" id="alanKisi" name="alanKisi" placeholder="alanKisi" required>
+        </div>
+        <div class="form-group">
+            <label for="verenMalzemeci">Veren Malzemeci</label>
+            <input class="form-control" type="text" id="verenMalzemeci" name="verenMalzemeci"
+                   placeholder="verenMalzemeci" required>
+        </div>
+        <div class="form-group">
+            <label for="verilmeNot">Verilme Not</label>
+            <input class="form-control" type="text" id="verilmeNot" name="verilmeNot" placeholder="verilmeNot" required>
+        </div>
+        <!-- hidden input -->
+        <div class="form-group">
+            <!-- <label for="malzemeNoList">Seçilen Malzemeler</label> -->
+            <input type="text" id="malzemeNoList" name="malzemeNoList" required readonly hidden>
+        </div>
+
+        <div class="form-group">
+            <button id="button" type="submit" class="btn btn-primary">Zimmetle</button>
+        </div>
+
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+
+            $('#myTable tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
+
+            $('#button').click(function () {
+                var secilenliste = table.rows('.selected').data().toArray();
+                if (secilenliste.length == 0) {
+                    alert("seçim yapmadınız!");
+                    event.preventDefault();  // form submit'i engelle
+                    return; // boşsa iptal
+                } else {
+                    var idArray = [];
+                    for (var i = 0; i < secilenliste.length; i++) {
+                        idArray.push(secilenliste[i][0]);
+                    }
+                    $("#malzemeNoList").val(idArray.join(",").toString());
+                }
+            });
+        });
+    </script>
 </div>
-</form>
-
-<script>
-    $(document).ready(function() {
-       var table = $('#myTable').DataTable( {
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        } );
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }
-        } );
-
-        $('#myTable tbody').on( 'click', 'tr', function () {
-            $(this).toggleClass('selected');
-        } );
-
-        $('#button').click( function () {
-            var secilenliste = table.rows('.selected').data().toArray();
-
-            var idArray = [];
-            for (var i = 0; i<  secilenliste.length; i++) {
-                idArray.push(secilenliste[i][0])
-                console.log(idArray[i])
-            }
-
-        } );
-
-    } );
-</script>
-
 </body>
 </html>
