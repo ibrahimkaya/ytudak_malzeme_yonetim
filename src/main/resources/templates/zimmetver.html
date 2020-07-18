@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <title>Malzeme Zimmetleme</title>
+    </head>
+<body>
+<!--
+@TODO
+tüm malzemeleri listele
+altına bir input form koy
+inputun altına bir submint button
+tabloyu seçlebilir yap
+controllera geç
+
+
+
+-->
+<div th:insert="header:: menu"></div>
+<form action="" method="post">
+
+<div class="container">
+    <h2>Malzemeler</h2>
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <!--  Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik) -->
+                <td scope=" col">#</td>
+                <td scope=" col">Kategori</td>
+                <td scope=" col">Tip</td>
+                <td scope=" col">Model</td>
+                <td scope=" col">İsim</td>
+                <td scope=" col">Numara-Boy</td>
+                <td scope=" col">Not</td>
+                <td scope=" col">Zimmet Durumu</td>
+            </tr>
+            </thead>
+            <tbody id ="malzemeBody">
+            <tr th:each="malzeme:${malzemelist}">
+                <td th:text="${malzeme.id}" name = "id"></td>
+                <td th:text="${malzeme.kategori.kategori}"></td>
+                <td th:text="${malzeme.tip}"></td>
+                <td th:text="${malzeme.model}"></td>
+                <td th:text="${malzeme.isim}"></td>
+                <td th:text="${malzeme.numara_boy}"></td>
+                <td th:text="${malzeme.durum_not}"></td>
+                <div th:switch="${malzeme.aktiflik}">
+                    <td th:case="true">Kulüpte</td>
+                    <td th:case="false">Verilmiş</td>
+                </div>
+
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th></th>
+                <th> kategori </th>
+                <th> Tip </th>
+                <th> Model </th>
+                <th> isim </th>
+                <th> numara-boy </th>
+                <th> not </th>
+                <th> Zimmet Durumu</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <button type="button" id = "button">Click Me!</button>
+</div>
+</form>
+
+<script>
+    $(document).ready(function() {
+       var table = $('#myTable').DataTable( {
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
+
+        $('#myTable tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('selected');
+        } );
+
+        $('#button').click( function () {
+            var secilenliste = table.rows('.selected').data().toArray();
+
+            var idArray = [];
+            for (var i = 0; i<  secilenliste.length; i++) {
+                idArray.push(secilenliste[i][0])
+                console.log(idArray[i])
+            }
+
+        } );
+
+    } );
+</script>
+
+</body>
+</html>
