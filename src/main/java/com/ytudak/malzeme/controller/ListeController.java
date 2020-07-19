@@ -12,10 +12,15 @@ public class ListeController {
     @Autowired
     private MalzemeRepository malzemeRepository;
 
+
+    /*
+     GET "/liste" isteği geldiği zaman, mvc controller bu isteği geldiğinde  controller bu isteği yakalyıp alttaki fonksiyonu çağırır
+     Bu istek model arayüzü ile malzemerepository üstünden gelen tüm malzemeleri ekliyoruz
+     malzemelist  thymeleaf template ile erişeceğimiz değişken ismi ile oluşturuyoruz
+     */
     @GetMapping("/liste")
     public String listele(Model model){
 
-        System.out.println("++++++++++++++++" + malzemeRepository.findAll().get(1).toString());
         model.addAttribute("malzemelist",malzemeRepository.findAll());
 
         return "liste";

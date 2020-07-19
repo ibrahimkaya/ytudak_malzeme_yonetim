@@ -46,12 +46,6 @@ public class Zimmet {
         this.malzemeNo = malzemeNo;
     }
 
-    public Zimmet(String malzemeNoList, String alanKisi, String verenMalzemeci) {
-        this.malzemeNoList = malzemeNoList;
-        this.alanKisi = alanKisi;
-        this.verenMalzemeci = verenMalzemeci;
-    }
-
     public Long getMalzemeNo() {
         return malzemeNo;
     }

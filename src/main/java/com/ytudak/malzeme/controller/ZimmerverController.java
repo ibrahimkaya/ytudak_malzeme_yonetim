@@ -3,6 +3,7 @@ package com.ytudak.malzeme.controller;
 import com.ytudak.malzeme.model.Malzeme;
 import com.ytudak.malzeme.model.Zimmet;
 import com.ytudak.malzeme.repository.MalzemeRepository;
+import com.ytudak.malzeme.repository.ZimmetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class ZimmerverController {
     @Autowired
     private MalzemeRepository malzemeRepository;
 
+    @Autowired
+    private ZimmetRepository zimmetRepository;
+
     @GetMapping("/zimmetver")
     public String listele(Model model) {
 
@@ -28,22 +32,40 @@ public class ZimmerverController {
     }
 
     @PostMapping("zimmetver/zimmetle/onay")
-    public String zimmetOnay(Zimmet zimmet){
+    public String zimmetOnay(Zimmet zimmet, Model model) {
         System.out.println(zimmet.toString());
-        /*
-        gelen zimmet objesinden
-        alanKisi,verenMalzemeci,verilmeNot ve malzemeNoList alinacak
-        aktiflikler false yapilacak ve zimmet tablosuna eklenecek.
-        */
+
+        List<Malzeme> hataList = new ArrayList<>();
+        List<Malzeme> successList = new ArrayList<>();
 
         // malzemeNoList' ten id leri al
         String[] malzemeList = zimmet.getMalzemeNoList().split(",");
         // iterate id
         for (String id : malzemeList) {
 
+            Optional<Malzeme> tempMalzeme = malzemeRepository.findById(Long.valueOf(id));
+            //malzeme var ve aktiflik alınabilir ise
+            if (tempMalzeme.isPresent() && tempMalzeme.get().getAktiflik().equals(true)) {
+                //aktiflik durumunu false yap
+                tempMalzeme.get().setAktiflik(false);
+                malzemeRepository.save(tempMalzeme.get());
+
+                successList.add(tempMalzeme.get());
+
+                //gelen zimmet bilgilerinden yeni bir zimmet objesi oluştur
+                zimmetRepository.save(new Zimmet(Long.valueOf(id), zimmet.getAlanKisi(), zimmet.getVerenMalzemeci(), zimmet.getVerilmeNot()));
+
+            } else {
+                //malzeme zimmetlenemedi ise
+                hataList.add(tempMalzeme.get());
+            }
+
+            model.addAttribute("hataList",hataList);
+            model.addAttribute("successList", successList);
+            model.addAttribute("zimmet",zimmet);
         }
         // return degisecek
-        return "anasayfa";
+        return "sonuc";
     }
 
     @PostMapping("/zimmetver/zimmetle")
@@ -70,9 +92,9 @@ public class ZimmerverController {
             }
         }
         // alan kisi bilgilerini bundan alicam
-        model.addAttribute("kisi",zimmet);
+        model.addAttribute("kisi", zimmet);
         // secilenleri yolla
-        model.addAttribute("secilenler",secilenMalzemeList);
+        model.addAttribute("secilenler", secilenMalzemeList);
 
         // onay sayfasina yolla
         return "zimmetveronay";
