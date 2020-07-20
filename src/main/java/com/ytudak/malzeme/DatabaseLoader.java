@@ -33,14 +33,24 @@ public class DatabaseLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.printf("");
         this.kategoriRepository.save(new Kategori("ip"));
-        this.kategoriRepository.save(new Kategori("cam"));
+        this.kategoriRepository.save(new Kategori("geleneksel"));
         this.kategoriRepository.save(new Kategori("cadir"));
+        this.kategoriRepository.save(new Kategori("takoz"));
+
         //(Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik)
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "String tip", "String marka", "String isim", "Stri123a_boy", "Stri123_not", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "String tip", "String marka", "String isim", "String numara_boy", "S33 durum_not", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "ip 1", "String marka", "String isim", "Strss_boy", "String durum_not", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "ip2", "String marka", "String isim", "String numara_boy", "String durum_not", false));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(3)).get(), " cadir", "String marka", "String isim", "String numara_boy", "String durum_not", false));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "pembe", "60m", "temiz", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "mavi", "60m", "temiz", true));
+
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "sarı", "50m", "performans", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "kırmızı", "50m", "performans", true));
+
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "", "bd", "mikro", "0.1", " ", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "mikro", "0.2", " ", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "", "3", " ", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "dmm", "", "2", " yeni", true));
+
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(3)).get(), "5 mevsim", "husky", "figther", "F3", "kapı fermuar has.", true));
+
         //(String alanKisi, String verenMalzemeci, , String verilmeNot)
 
         this.userRepository.save(new User("admin",new BCryptPasswordEncoder().encode("1"),true,"ROLE_ADMIN"));
