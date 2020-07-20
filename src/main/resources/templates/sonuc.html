@@ -94,8 +94,12 @@
 
 <script>
     $(document).ready(function () {
-        $('#successTable').DataTable({});
-        $('#failTable').DataTable({});
+        $('#successTable').DataTable({
+            "info":     false
+        });
+        $('#failTable').DataTable({
+            "info":     false
+        });
         $('#zimmetTable').DataTable({
             "paging":   false,
             "ordering": false,
@@ -105,7 +109,5 @@
         });
     });
 </script>
-
-
 </body>
 </html>

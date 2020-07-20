@@ -25,6 +25,9 @@ public class Zimmet {
     @Transient
     private String malzemeNoList;
 
+    @Transient
+    private Malzeme malzeme;
+
     private String alanKisi;
 
     private String verenMalzemeci;
@@ -96,6 +99,14 @@ public class Zimmet {
 
     public void setVerilmeNot(String verilmeNot) {
         this.verilmeNot = verilmeNot;
+    }
+
+    public Malzeme getMalzeme() {
+        return malzeme;
+    }
+
+    public void setMalzeme(Malzeme malzeme) {
+        this.malzeme = malzeme;
     }
 
     @Override

@@ -22,6 +22,7 @@
             <thead>
             <tr style="font-weight: bold;">
                 <!--  Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik) -->
+                <td scope=" col">id</td>
                 <td scope=" col">Kategori</td>
                 <td scope=" col">Tip</td>
                 <td scope=" col">Model</td>
@@ -33,6 +34,7 @@
             </thead>
             <tbody>
             <tr th:each="malzeme:${malzemelist}">
+                <td th:text="${malzeme.id}"></td>
                 <td th:text="${malzeme.kategori.kategori}"></td>
                 <td th:text="${malzeme.tip}"></td>
                 <td th:text="${malzeme.model}"></td>
@@ -48,6 +50,7 @@
             </tbody>
             <tfoot>
             <tr>
+                <th> id </th>
                 <th> kategori </th>
                 <th> Tip </th>
                 <th> Model </th>
