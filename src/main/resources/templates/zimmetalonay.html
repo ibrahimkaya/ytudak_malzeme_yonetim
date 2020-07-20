@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <title>Teslim Al Onay</title>
+    </head>
+<body>
+<div th:insert="header:: menu"></div>
+<div class="container">
+    <h2>Seçilen Malzemeler</h2>
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <td scope=" col">Alan Kişi</td>
+                <td scope=" col">Veren Malzemeci</td>
+                <td scope=" col">Zimmetlenme Tarihi</td>
+                <td scope=" col">Zimmetlenme Notu</td>
+
+                <td scope=" col">#</td>
+                <td scope=" col">Kategori</td>
+                <td scope=" col">Tip</td>
+                <td scope=" col">Model</td>
+                <td scope=" col">İsim</td>
+                <td scope=" col">Numara-Boy</td>
+                <td scope=" col">Not</td>
+            </tr>
+            </thead>
+
+            <tbody id="malzemeBody">
+            <tr th:each="zimmet:${secilenZimmetList}">
+                <td th:text="${zimmet.alanKisi}"></td>
+                <td th:text="${zimmet.verenMalzemeci}"></td>
+                <td th:text="${zimmet.verilmeTarihi}"></td>
+                <td th:text="${zimmet.verilmeNot}"></td>
+
+                <td th:text="${zimmet.malzeme.id}"></td>
+                <td th:text="${zimmet.malzeme.kategori.kategori}"></td>
+                <td th:text="${zimmet.malzeme.tip}"></td>
+                <td th:text="${zimmet.malzeme.model}"></td>
+                <td th:text="${zimmet.malzeme.isim}"></td>
+                <td th:text="${zimmet.malzeme.numara_boy}"></td>
+                <td th:text="${zimmet.malzeme.durum_not}"></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <th> Alan Kişi</th>
+                <th> Veren Malzemeci</th>
+                <th> Verilme Tarihi</th>
+                <th> Verilme Not</th>
+
+                <th> id </th>
+                <th> kategori</th>
+                <th> Tip</th>
+                <th> Model</th>
+                <th> isim</th>
+                <th> numara-boy</th>
+                <th> not</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <form th:action="@{/teslim/teslimAl/onay}" method="post">
+        <div class="form-group">
+            <label for="getirenKisi">Getiren Kisi</label>
+            <input class="form-control" type="text" id="getirenKisi" name="getirenKisi" placeholder="getirenKisi" readonly required>
+        </div>
+        <div class="form-group">
+            <label for="teslimAlanMalzemeci">Teslim Alan Malzemeci</label>
+            <input class="form-control" type="text" id="teslimAlanMalzemeci" name="teslimAlanMalzemeci"
+                   placeholder="teslimAlanMalzemeci" readonly required>
+        </div>
+        <div class="form-group">
+            <label for="teslimNot">Teslim Not</label>
+            <input class="form-control" type="text" id="teslimNot" name="teslimNot" placeholder="teslimNot" readonly required>
+        </div>
+        <!-- hidden input -->
+        <div class="form-group" style="display: none;">
+            <input class="form-control" type="text" id="malzemeNoList" name="malzemeNoList" required readonly hidden>
+        </div>
+
+        <div class="form-group">
+            <button id="button" type="submit" class="btn btn-primary">Onayla</button>
+        </div>
+
+    </form>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var table = $('#myTable').DataTable({});
+    });
+</script>
+
+<!--
+  Kaynak : https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#script-inlining-javascript-and-dart
+-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    document.getElementById("getirenKisi").value = [[${teslim.getirenKisi}]];
+    document.getElementById("teslimAlanMalzemeci").value = [[${teslim.teslimAlanMalzemeci}]];
+    document.getElementById("teslimNot").value = [[${teslim.teslimNot}]];
+    document.getElementById("malzemeNoList").value = [[${teslim.malzemeNoList}]];
+
+    /*]]>*/
+</script>
+</body>
+</html>

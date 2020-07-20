@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <title>Sonuc listeleri</title>
+</head>
+<body>
+
+<div th:insert="header:: menu"></div>
+
+<div class="container">
+    <h2>Basarili sonuclar</h2>
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <td scope=" col">Alan Kişi</td>
+                <td scope=" col">Veren Malzemeci</td>
+                <td scope=" col">Zimmetlenme Tarihi</td>
+                <td scope=" col">Zimmetlenme Notu</td>
+
+                <td scope=" col">#</td>
+                <td scope=" col">Kategori</td>
+                <td scope=" col">Tip</td>
+                <td scope=" col">Model</td>
+                <td scope=" col">İsim</td>
+                <td scope=" col">Numara-Boy</td>
+                <td scope=" col">Not</td>
+            </tr>
+            </thead>
+
+            <tbody id="malzemeBody">
+            <tr th:each="zimmet:${successList}">
+                <td th:text="${zimmet.alanKisi}"></td>
+                <td th:text="${zimmet.verenMalzemeci}"></td>
+                <td th:text="${zimmet.verilmeTarihi}"></td>
+                <td th:text="${zimmet.verilmeNot}"></td>
+
+                <td th:text="${zimmet.malzeme.id}"></td>
+                <td th:text="${zimmet.malzeme.kategori.kategori}"></td>
+                <td th:text="${zimmet.malzeme.tip}"></td>
+                <td th:text="${zimmet.malzeme.model}"></td>
+                <td th:text="${zimmet.malzeme.isim}"></td>
+                <td th:text="${zimmet.malzeme.numara_boy}"></td>
+                <td th:text="${zimmet.malzeme.durum_not}"></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <th> Alan Kişi</th>
+                <th> Veren Malzemeci</th>
+                <th> Verilme Tarihi</th>
+                <th> Verilme Not</th>
+
+                <th> id </th>
+                <th> kategori</th>
+                <th> Tip</th>
+                <th> Model</th>
+                <th> isim</th>
+                <th> numara-boy</th>
+                <th> not</th>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+    <hr>
+    <div  th:if= "${hataList.size() != 0}">
+        <h2>hata olan sonuclar</h2>
+        <div class="table-responsive">
+            <table id="failTable" class="table table-striped">
+                <thead>
+                <tr style="font-weight: bold;">
+                    <td scope=" col">#</td>
+                    <td scope=" col">Kategori</td>
+                    <td scope=" col">Tip</td>
+                    <td scope=" col">Model</td>
+                    <td scope=" col">İsim</td>
+                    <td scope=" col">Numara-Boy</td>
+                </tr>
+                </thead>
+                <tbody >
+                <tr th:each="malzeme:${hataList}">
+                    <td th:text="${malzeme.id}"></td>
+                    <td th:text="${malzeme.kategori.kategori}"></td>
+                    <td th:text="${malzeme.tip}"></td>
+                    <td th:text="${malzeme.model}"></td>
+                    <td th:text="${malzeme.isim}"></td>
+                    <td th:text="${malzeme.numara_boy}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+    </div>
+    <h2>Teslim alınma kisi bilgisi</h2>
+    <div class="table-responsive">
+        <table id="zimmetTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <td scope=" col">Getiren kişi</td>
+                <td scope=" col">Teslim alan Malzemeci</td>
+                <td scope=" col">Teslim Not</td>
+            </tr>
+            </thead>
+            <tbody >
+            <tr >
+                <td th:text="${teslim.getirenKisi}"></td>
+                <td th:text="${teslim.teslimAlanMalzemeci}"></td>
+                <td th:text="${teslim.teslimNot}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#successTable').DataTable({
+            "info":     false
+        });
+        $('#failTable').DataTable({
+            "info":     false
+        });
+        $('#zimmetTable').DataTable({
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+            "search": false,
+            "searching": false
+        });
+    });
+</script>
+
+
+</body>
+</html>

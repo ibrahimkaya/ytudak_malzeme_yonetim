@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <title>Teslim Alma</title>
+    </head>
+<body>
+
+<div th:insert="header:: menu"></div>
+<div class="container">
+    <h2>Zimmetli Malzemeler</h2>
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <td scope=" col">Alan Kişi</td>
+                <td scope=" col">Veren Malzemeci</td>
+                <td scope=" col">Zimmetlenme Tarihi</td>
+                <td scope=" col">Zimmetlenme Notu</td>
+
+                <td scope=" col">#</td>
+                <td scope=" col">Kategori</td>
+                <td scope=" col">Tip</td>
+                <td scope=" col">Model</td>
+                <td scope=" col">İsim</td>
+                <td scope=" col">Numara-Boy</td>
+                <td scope=" col">Not</td>
+            </tr>
+            </thead>
+
+            <tbody id="malzemeBody">
+            <tr th:each="zimmet:${zimmetList}">
+                <td th:text="${zimmet.alanKisi}"></td>
+                <td th:text="${zimmet.verenMalzemeci}"></td>
+                <td th:text="${zimmet.verilmeTarihi}"></td>
+                <td th:text="${zimmet.verilmeNot}"></td>
+
+                <td th:text="${zimmet.malzeme.id}"></td>
+                <td th:text="${zimmet.malzeme.kategori.kategori}"></td>
+                <td th:text="${zimmet.malzeme.tip}"></td>
+                <td th:text="${zimmet.malzeme.model}"></td>
+                <td th:text="${zimmet.malzeme.isim}"></td>
+                <td th:text="${zimmet.malzeme.numara_boy}"></td>
+                <td th:text="${zimmet.malzeme.durum_not}"></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <th> Alan Kişi</th>
+                <th> Veren Malzemeci</th>
+                <th> Verilme Tarihi</th>
+                <th> Verilme Not</th>
+
+                <th> id </th>
+                <th> kategori</th>
+                <th> Tip</th>
+                <th> Model</th>
+                <th> isim</th>
+                <th> numara-boy</th>
+                <th> not</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <form th:action="@{/zimmetal/teslimAl}" method="post">
+        <div class="form-group">
+            <label for="getirenKisi">Getiren Kisi</label>
+            <input class="form-control" type="text" id="getirenKisi" name="getirenKisi" placeholder="getirenKisi" required>
+        </div>
+        <div class="form-group">
+            <label for="teslimAlanMalzemeci">Teslim Alan Malzemeci</label>
+            <input class="form-control" type="text" id="teslimAlanMalzemeci" name="teslimAlanMalzemeci"
+                   placeholder="teslimAlanMalzemeci" required>
+        </div>
+        <div class="form-group">
+            <label for="teslimNot">Teslim Not</label>
+            <input class="form-control" type="text" id="teslimNot" name="teslimNot" placeholder="teslimNot" required>
+        </div>
+        <!-- hidden input -->
+        <div class="form-group" style="display: none;">
+            <input class="form-control" type="text" id="malzemeNoList" name="malzemeNoList" required readonly hidden>
+        </div>
+
+        <div class="form-group">
+            <button id="button" type="submit" class="btn btn-primary">Teslim Al</button>
+        </div>
+
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+
+            $('#myTable tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
+
+            $('#button').click(function () {
+                var secilenliste = table.rows('.selected').data().toArray();
+                if (secilenliste.length == 0) {
+                    alert("seçim yapmadınız!");
+                    event.preventDefault();  // form submit'i engelle
+                    return; // boşsa iptal
+                } else {
+                    var idArray = [];
+                    for (var i = 0; i < secilenliste.length; i++) {
+                        idArray.push(secilenliste[i][4]);
+                    }
+                    $("#malzemeNoList").val(idArray.join(",").toString());
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
