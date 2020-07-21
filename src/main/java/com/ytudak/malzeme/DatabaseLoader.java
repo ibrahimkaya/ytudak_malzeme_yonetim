@@ -1,9 +1,6 @@
 package com.ytudak.malzeme;
 
-import com.ytudak.malzeme.model.Kategori;
-import com.ytudak.malzeme.model.Malzeme;
-import com.ytudak.malzeme.model.User;
-import com.ytudak.malzeme.model.Zimmet;
+import com.ytudak.malzeme.model.*;
 import com.ytudak.malzeme.repository.KategoriRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.UserRepository;
@@ -38,18 +35,18 @@ public class DatabaseLoader implements CommandLineRunner {
         this.kategoriRepository.save(new Kategori("takoz"));
 
         //(Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik)
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "pembe", "60m", "temiz", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "mavi", "60m", "temiz", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "pembe", "60m", "temiz", true, Status.KULLANILABILIR));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "mavi", "60m", "temiz", true,Status.KULLANILABILIR));
 
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "sarı", "50m", "performans", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "kırmızı", "50m", "performans", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "sarı", "50m", "performans", true,Status.KULLANILABILIR));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "kırmızı", "50m", "performans", true,Status.KULLANILABILIR));
 
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "", "bd", "mikro", "0.1", " ", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "mikro", "0.2", " ", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "", "3", " ", true));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "dmm", "", "2", " yeni", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "", "bd", "mikro", "0.1", " ", true,Status.KULLANILABILIR));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "mikro", "0.2", " ", true,Status.KULLANILABILIR));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "", "3", " ", true,Status.KULLANILABILIR));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "dmm", "", "2", " yeni", true,Status.KULLANILABILIR));
 
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(3)).get(), "5 mevsim", "husky", "figther", "F3", "kapı fermuar has.", true));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(3)).get(), "5 mevsim", "husky", "figther", "F3", "kapı fermuar has.", true,Status.KULLANILABILIR));
 
         //(String alanKisi, String verenMalzemeci, , String verilmeNot)
 

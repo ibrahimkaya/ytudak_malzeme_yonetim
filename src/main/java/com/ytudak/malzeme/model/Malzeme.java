@@ -8,13 +8,13 @@ import javax.persistence.*;
 Tüm malzemelerin özlülük bilgilerinin tutulduğu model
 
  */
+
 @Entity
 public class Malzeme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @ManyToOne
     @JoinColumn(name = "kategoriID")
@@ -31,12 +31,16 @@ public class Malzeme {
     @Value("")
     private String durum_not;
 
+    // kulüpte mi - zimmetlenmiş mi ayrimi icin
     private Boolean aktiflik = true;
+    // malzeme onaylanmis mi - kullanim disi mi - kullanilabilir mi ayrimi icin
+    //
+    private Status status;
 
     public Malzeme() {
     }
 
-    public Malzeme(Kategori kategori, String tip, String model, String isim, String numara_boy, String durum_not, Boolean aktiflik) {
+    public Malzeme(Kategori kategori, String tip, String model, String isim, String numara_boy, String durum_not, Boolean aktiflik, Status status) {
         this.kategori = kategori;
         this.tip = tip;
         this.model = model;
@@ -44,13 +48,24 @@ public class Malzeme {
         this.numara_boy = numara_boy;
         this.durum_not = durum_not;
         this.aktiflik = aktiflik;
+        this.status = status;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public Kategori getKategori() {
         return kategori;
@@ -149,6 +164,8 @@ public class Malzeme {
                 ", numara_boy='" + numara_boy + '\'' +
                 ", durum_not='" + durum_not + '\'' +
                 ", aktiflik=" + aktiflik +
+                ", status='" + status + '\'' +
+
                 '}';
     }
 }

@@ -30,14 +30,14 @@
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="/profile">
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
+                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a href="/malzemeekle">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Malzeme Ekle
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a href="/admin">
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Change User Role
+                            <a href="/malzemesil">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Malzeme Sil
                             </a>
                         </li>
                         <li role="separator" class="divider"></li>
