@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/zimmetal","/zimmetal/*","/zimmetal/*/*").hasRole("ADMIN")
                 .antMatchers("/teslim","/teslim/*","/teslim/*/*").hasRole("ADMIN")
                 .antMatchers("/malzemeekle","/malzemesil","/malzemeduzenle","/malzeme","/malzeme/*","/malzeme/*/*").hasRole("ADMIN")
+                .antMatchers("/kategoriekle").hasRole("ADMIN")
                 //sadece baskan
                 .antMatchers("/statuonay","/statuonay/onay","/statuonaysonuc").hasRole("BASKAN")
                 .anyRequest().authenticated()

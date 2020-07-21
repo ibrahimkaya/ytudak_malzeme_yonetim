@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <div th:replace="favicon :: favicon"></div>
+        <title>Kategori Ekle</title>
+    </head>
+<body>
+
+<div th:insert="header :: menu"></div>
+
+
+<div class="container">
+    <h2>Kategori Ekle</h2>
+    <br>
+    <h4 class="h4 mb-3 font-weight-normal text-center" th:if="${param.success}"style="color: blue;">Kategori Oluşturuldu.</h4>
+    <h4 class="h4 mb-3 font-weight-normal text-center" th:if="${param.fail}"style="color: red;">Hata Oluştu.</h4>
+    <form th:action="@{/kategoriekle}" method="post">
+        <div class="form-group">
+            <label for="kategori">Kategori Adı</label>
+            <input class="form-control" type="text" name="kategori" id="kategori" placeholder="Kategori Adı" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="submit">Kaydet</button>
+        </div>
+    </form>
+
+    <hr>
+    <h2>Kategoriler</h2>
+    <div class="table-responsive">
+        <table id="table" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <td scope=" col">#</td>
+                <td scope=" col">Kategori</td>
+            </tr>
+            </thead>
+            <tbody id="malzemeBody">
+            <tr th:each="kategori:${kategoriler}">
+                <td th:text="${kategori.id}"></td>
+                <td th:text="${kategori.kategori}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable({
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+            "search": false,
+            "searching": false
+        });
+    });
+</script>
+</body>
+</html>

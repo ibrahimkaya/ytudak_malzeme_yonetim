@@ -43,6 +43,11 @@
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Malzeme Duzenle & Sil
                             </a>
                         </li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a href="/kategoriekle">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Kategori Ekle
+                            </a>
+                        </li>
                         <li role="separator" class="divider"></li>
                         <li>
                             <a href="/logout">
