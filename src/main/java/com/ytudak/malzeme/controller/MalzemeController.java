@@ -47,4 +47,24 @@ public class MalzemeController {
         return "redirect:/malzemeekle";
     }
 
+    @GetMapping("/malzemeduzenle")
+    public String malzemeDuzenle(Model model){
+        model.addAttribute("malzemelist",malzemeRepository.findAll());
+        return "malzemeDuzenle";
+    }
+
+    @GetMapping("/malzeme/duzenle/{id}")
+    public String malzemeDuzenleRequest(Malzeme malzeme, RedirectAttributes redirectAttributes){
+       // malzeme.setStatus(Status.);
+        return "malzemeDuzenle";
+    }
+
+    @GetMapping("/malzeme/sil/{id}")
+    public String malzemeSilRequest(Malzeme malzeme, RedirectAttributes redirectAttributes){
+        Malzeme tempMalzeme = malzemeRepository.findById(malzeme.getId()).get();
+        tempMalzeme.setStatus(Status.SILME_BEKLIYOR);
+        malzemeRepository.save(tempMalzeme);
+        redirectAttributes.addAttribute("silmesuccess","");
+        return "redirect:/malzemeduzenle";
+    }
 }

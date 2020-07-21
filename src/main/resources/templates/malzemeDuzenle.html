@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <div th:replace="favicon :: favicon"></div>
+        <title>Malzeme Listesi</title>
+    </head>
+<body>
+
+<div th:insert="header:: menu"></div>
+
+<div class="container-fluid">
+    <h2>Malzeme Düzenle - Sil</h2>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.silmesuccess}" style="color: green;">Silme isteği başarılı.</h6>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.silmefail}" style="color: red;">Silme isteği oluştururken hata meydana geldi!</h6>
+
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <!--  Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik) -->
+                <td scope=" col">id</td>
+                <td scope=" col">Kategori</td>
+                <td scope=" col">Tip</td>
+                <td scope=" col">Model</td>
+                <td scope=" col">İsim</td>
+                <td scope=" col">Numara-Boy</td>
+                <td scope=" col">Not</td>
+                <td scope=" col">Zimmet Durumu</td>
+                <td scope=" col"> Statü</td>
+                <td scope=" col"> Düzenle</td>
+                <td scope=" col"> Sil</td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="malzeme:${malzemelist}">
+                <td th:text="${malzeme.id}"></td>
+                <td th:text="${malzeme.kategori.kategori}"></td>
+                <td th:text="${malzeme.tip}"></td>
+                <td th:text="${malzeme.model}"></td>
+                <td th:text="${malzeme.isim}"></td>
+                <td th:text="${malzeme.numara_boy}"></td>
+                <td th:text="${malzeme.durum_not}"></td>
+                <div th:switch="${malzeme.aktiflik}">
+                    <td style="color: green" th:case="true">Kulüpte</td>
+                    <td th:case="false">Verilmiş</td>
+                </div>
+                <div th:switch="${malzeme.status}">
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
+                </div>
+                <td scope="col" sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/malzeme/duzenle/{id}(id=${malzeme.id})}">
+                        <button class="btn btn-danger pull-right">Düzenle</button>
+                    </a>
+                </td>
+                <td scope="col" sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/malzeme/sil/{id}(id=${malzeme.id})}">
+                        <button class="btn btn-danger pull-right">Sil</button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th> id</th>
+                <th> kategori</th>
+                <th> Tip</th>
+                <th> Model</th>
+                <th> isim</th>
+                <th> numara-boy</th>
+                <th> not</th>
+                <th> Zimmet Durumu</th>
+                <th> Statü</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+</body>
+</html>

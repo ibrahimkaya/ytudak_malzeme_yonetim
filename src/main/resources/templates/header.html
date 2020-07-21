@@ -27,22 +27,26 @@
                         <b sec:authentication="name"></b>
                         <span class="caret"></span>
                     </a>
-
                     <ul class="dropdown-menu">
+                        <li sec:authorize="hasRole('ROLE_BASKAN')">
+                            <a href="/statuonay">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Beklemedeki Onaylar
+                            </a>
+                        </li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')">
                             <a href="/malzemeekle">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Malzeme Ekle
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a href="/malzemesil">
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Malzeme Sil
+                            <a href="/malzemeduzenle">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Malzeme Duzenle & Sil
                             </a>
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
                             <a href="/logout">
-                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Çıkış Yap
                             </a>
                         </li>
                     </ul>
