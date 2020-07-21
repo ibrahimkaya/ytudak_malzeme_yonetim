@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/zimmetver","/zimmetver/zimmetle","/zimmetver/zimmetle/onay").hasRole("ADMIN")
                 .antMatchers("/zimmetal","/zimmetal/teslimAl","/teslim/teslimAl/onay").hasRole("ADMIN")
                 .antMatchers("/malzemeekle","/malzemesil").hasRole("ADMIN")
+                .antMatchers("/statuonay","/statuonaysonuc").hasRole("BASKAN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

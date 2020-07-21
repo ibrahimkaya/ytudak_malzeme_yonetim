@@ -28,7 +28,6 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.printf("");
         this.kategoriRepository.save(new Kategori("ip"));
         this.kategoriRepository.save(new Kategori("geleneksel"));
         this.kategoriRepository.save(new Kategori("cadir"));
@@ -52,6 +51,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
         this.userRepository.save(new User("admin", new BCryptPasswordEncoder().encode("1"), true, "ROLE_ADMIN"));
         this.userRepository.save(new User("user", new BCryptPasswordEncoder().encode("123"), true, "ROLE_USER"));
+        this.userRepository.save(new User("baskan", new BCryptPasswordEncoder().encode("1"), true, "ROLE_BASKAN"));
 
     }
 }
