@@ -44,6 +44,7 @@
                     <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
                     <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
                     <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
                 </div>
 
             </tr>
@@ -89,6 +90,7 @@
         </div>
         <hr>
     </div>
+    <input class="form-control btn btn-primary" type="button" onclick="window.location.href='/statuonay';" value="Geri Dön" />
 </div>
 
 

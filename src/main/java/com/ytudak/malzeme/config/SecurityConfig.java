@@ -27,11 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/favicon/**","/login","/css/**").permitAll()
-                .antMatchers("/zimmetver","/zimmetver/zimmetle","/zimmetver/zimmetle/onay").hasRole("ADMIN")
-                .antMatchers("/zimmetal","/zimmetal/teslimAl","/teslim/teslimAl/onay").hasRole("ADMIN")
-                .antMatchers("/malzemeekle","/malzemesil").hasRole("ADMIN")
-                .antMatchers("/statuonay","/statuonaysonuc").hasRole("BASKAN")
+                .antMatchers("/favicon/**","/login").permitAll()
+                // giriş yapan herkes
+                .antMatchers("/kayit","/liste","/anasayfa").hasAnyRole("ADMIN","USER","BASKAN")
+                // sadece malzemeciler
+                .antMatchers("/zimmetver","/zimmetver/*","/zimmetver/*/*").hasRole("ADMIN")
+                .antMatchers("/zimmetal","/zimmetal/*","/zimmetal/*/*").hasRole("ADMIN")
+                .antMatchers("/teslim","/teslim/*","/teslim/*/*").hasRole("ADMIN")
+                .antMatchers("/malzemeekle","/malzemesil","/malzemeduzenle","/malzeme","/malzeme/*","/malzeme/*/*").hasRole("ADMIN")
+                //sadece baskan
+                .antMatchers("/statuonay","/statuonay/onay","/statuonaysonuc").hasRole("BASKAN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
