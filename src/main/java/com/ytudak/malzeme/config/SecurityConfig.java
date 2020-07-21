@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login","/css/**").permitAll()
+                .antMatchers("/favicon/**","/login","/css/**").permitAll()
                 .antMatchers("/zimmetver","/zimmetver/zimmetle","/zimmetver/zimmetle/onay").hasRole("ADMIN")
                 .antMatchers("/zimmetal","/zimmetal/teslimAl","/teslim/teslimAl/onay").hasRole("ADMIN")
                 .antMatchers("/malzemeekle","/malzemesil").hasRole("ADMIN")

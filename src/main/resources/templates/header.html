@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-default" th:fragment="menu">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -9,15 +8,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/anasayfa">Ytudak</a>
+            <a class="navbar-brand" href="/anasayfa">YTUDAK</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ><a href="/anasayfa">anasayfa</a></li>
+                <li ><a href="/anasayfa">Anasayfa</a></li>
                 <li><a href="/liste">Listele</a></li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')" > <a href="/zimmetver">Zimmet ver</a></li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/zimmetal">Zimmet al</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')" > <a href="/zimmetver">Zimmet Ver</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/zimmetal">Zimmet Al</a></li>
                 <li><a href="/kayit">Geçmiş Kayıtlar</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
