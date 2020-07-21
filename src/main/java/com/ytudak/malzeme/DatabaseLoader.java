@@ -42,9 +42,9 @@ public class DatabaseLoader implements CommandLineRunner {
         this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "kırmızı", "50m", "performans", true, Status.KULLANILABILIR));
 
         this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "", "bd", "mikro", "0.1", " ", true, Status.KULLANILABILIR));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "mikro", "0.2", " ", true, Status.KULLANILABILIR));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "", "3", " ", true, Status.KULLANILABILIR));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "dmm", "", "2", " yeni", true, Status.KULLANILABILIR));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "mikro", "0.2", " ", true, Status.KULLANILAMAZ));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "", "3", " ", true, Status.ONAY_BEKLIYOR));
+        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "dmm", "", "2", " yeni", true, Status.SILME_BEKLIYOR));
 
         this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(3)).get(), "5 mevsim", "husky", "figther", "F3", "kapı fermuar has.", true, Status.KULLANILABILIR));
 

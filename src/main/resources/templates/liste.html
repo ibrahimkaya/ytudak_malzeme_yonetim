@@ -44,10 +44,15 @@
                 <td th:text="${malzeme.numara_boy}"></td>
                 <td th:text="${malzeme.durum_not}"></td>
                 <div th:switch="${malzeme.aktiflik}">
-                    <td th:case="true">Kulüpte</td>
+                    <td style="color: green" th:case="true">Kulüpte</td>
                     <td th:case="false">Verilmiş</td>
                 </div>
-                <td th:text="${malzeme.status}"></td>
+                <div th:switch="${malzeme.status}">
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
+                </div>
             </tr>
             </tbody>
             <tfoot>
