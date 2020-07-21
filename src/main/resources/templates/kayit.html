@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <div th:replace="favicon :: favicon"></div>
+        <title>Malzeme Listeleri</title>
+    </head>
+<body>
+
+<div th:insert="header:: menu"></div>
+
+<div class="container-fluid">
+    <h2>Zimmetli Malzemeler</h2>
+    <div class="table-responsive">
+        <table id="zimmetTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <td scope=" col">Alan Kişi</td>
+                <td scope=" col">Veren Malzemeci</td>
+                <td scope=" col">Zimmetlenme Tarihi</td>
+                <td scope=" col">Zimmetlenme Notu</td>
+
+                <td scope=" col">id</td>
+                <td scope=" col">Kategori</td>
+                <td scope=" col">Tip</td>
+                <td scope=" col">Model</td>
+                <td scope=" col">İsim</td>
+                <td scope=" col">Numara-Boy</td>
+                <td scope=" col">Not</td>
+            </tr>
+            </thead>
+
+            <tbody id="malzemeBody">
+            <tr th:each="zimmet:${zimmetList}">
+                <td th:text="${zimmet.alanKisi}"></td>
+                <td th:text="${zimmet.verenMalzemeci}"></td>
+                <td th:text="${zimmet.verilmeTarihi}"></td>
+                <td th:text="${zimmet.verilmeNot}"></td>
+
+                <td th:text="${zimmet.malzeme.id}"></td>
+                <td th:text="${zimmet.malzeme.kategori.kategori}"></td>
+                <td th:text="${zimmet.malzeme.tip}"></td>
+                <td th:text="${zimmet.malzeme.model}"></td>
+                <td th:text="${zimmet.malzeme.isim}"></td>
+                <td th:text="${zimmet.malzeme.numara_boy}"></td>
+                <td th:text="${zimmet.malzeme.durum_not}"></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <th> Alan Kişi</th>
+                <th> Veren Malzemeci</th>
+                <th> Verilme Tarihi</th>
+                <th> Verilme Not</th>
+
+                <th> id </th>
+                <th> kategori</th>
+                <th> Tip</th>
+                <th> Model</th>
+                <th> isim</th>
+                <th> numara-boy</th>
+                <th> not</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <h2>Teslim Edilmiş Malzemeler</h2>
+    <div class="table-responsive">
+        <table id="teslimTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <!-- alan kişi bilgileri -->
+                <td scope=" col">Alan Kişi</td>
+                <td scope=" col">Veren Malzemeci</td>
+                <td scope=" col">Zimmetlenme Tarihi</td>
+                <td scope=" col">Zimmetlenme Notu</td>
+
+                <!-- malzeme bilgileri -->
+                <td scope=" col">id</td>
+                <td scope=" col">Kategori</td>
+                <td scope=" col">Tip</td>
+                <td scope=" col">Model</td>
+                <td scope=" col">İsim</td>
+                <td scope=" col">Numara-Boy</td>
+                <td scope=" col">Not</td>
+
+                <!-- teslim edilme bilgileri -->
+                <td scope=" col">Veren Kişi</td>
+                <td scope=" col">Geri Alan Malz.</td>
+                <td scope=" col">Teslim Tarihi</td>
+                <td scope=" col">Teslim Notu</td>
+
+            </tr>
+            </thead>
+
+            <tbody >
+            <tr th:each="teslim:${teslimList}">
+                <td th:text="${teslim.alanKisi}"></td>
+                <td th:text="${teslim.verenMalzemeci}"></td>
+                <td th:text="${teslim.verilmeTarihi}"></td>
+                <td th:text="${teslim.verilmeNot}"></td>
+
+                <td th:text="${teslim.malzeme.id}"></td>
+                <td th:text="${teslim.malzeme.kategori.kategori}"></td>
+                <td th:text="${teslim.malzeme.tip}"></td>
+                <td th:text="${teslim.malzeme.model}"></td>
+                <td th:text="${teslim.malzeme.isim}"></td>
+                <td th:text="${teslim.malzeme.numara_boy}"></td>
+                <td th:text="${teslim.malzeme.durum_not}"></td>
+
+                <td th:text="${teslim.getirenKisi}"></td>
+                <td th:text="${teslim.teslimAlanMalzemeci}"></td>
+                <td th:text="${teslim.teslimTarihi}"></td>
+                <td th:text="${teslim.teslimNot}"></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <th> Alan Kişi</th>
+                <th> Veren Malzemeci</th>
+                <th> Verilme Tarihi</th>
+                <th> Verilme Not</th>
+
+                <th> id </th>
+                <th> kategori</th>
+                <th> Tip</th>
+                <th> Model</th>
+                <th> isim</th>
+                <th> numara-boy</th>
+                <th> not</th>
+
+                <th> </th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
+
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#zimmetTable').DataTable( {
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
+
+        $('#teslimTable').DataTable( {
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
+
+    } );
+</script>
+
+</body>
+</html>

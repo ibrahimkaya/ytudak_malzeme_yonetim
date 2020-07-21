@@ -31,7 +31,7 @@ public class ZimmerverController {
         return "zimmetver";
     }
 
-    @PostMapping("zimmetver/zimmetle/onay")
+    @PostMapping("/zimmetver/zimmetle/onay")
     public String zimmetOnay(Zimmet zimmet, Model model) {
         System.out.println(zimmet.toString());
 

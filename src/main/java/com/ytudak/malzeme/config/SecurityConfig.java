@@ -27,8 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login","/css/**").permitAll()
-                .antMatchers("/zimmetver","/zimmetver/zimmetle","/zimmetver/zimmetle/onay","/zimmetal","/zimmetal/teslimAl","/teslim/teslimAl/onay").hasRole("ADMIN")
+                .antMatchers("/favicon/**","/login").permitAll()
+                // giriş yapan herkes
+                .antMatchers("/kayit","/liste","/anasayfa").hasAnyRole("ADMIN","USER","BASKAN")
+                // sadece malzemeciler
+                .antMatchers("/zimmetver","/zimmetver/*","/zimmetver/*/*").hasRole("ADMIN")
+                .antMatchers("/zimmetal","/zimmetal/*","/zimmetal/*/*").hasRole("ADMIN")
+                .antMatchers("/teslim","/teslim/*","/teslim/*/*").hasRole("ADMIN")
+                .antMatchers("/malzemeekle","/malzemesil","/malzemeduzenle","/malzeme","/malzeme/*","/malzeme/*/*").hasRole("ADMIN")
+                //sadece baskan
+                .antMatchers("/statuonay","/statuonay/onay","/statuonaysonuc").hasRole("BASKAN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

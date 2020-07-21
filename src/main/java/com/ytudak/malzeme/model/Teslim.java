@@ -43,6 +43,9 @@ public class Teslim {
     @Transient
     private String malzemeNoList;
 
+    @Transient
+    private  Malzeme malzeme;
+
 
     public Teslim() {
     }
@@ -144,6 +147,14 @@ public class Teslim {
 
     public void setMalzemeNoList(String malzemeNoList) {
         this.malzemeNoList = malzemeNoList;
+    }
+
+    public Malzeme getMalzeme() {
+        return malzeme;
+    }
+
+    public void setMalzeme(Malzeme malzeme) {
+        this.malzeme = malzeme;
     }
 
     @Override

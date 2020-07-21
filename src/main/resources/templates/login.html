@@ -5,24 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css">
-    <title>Login</title>
+    <div th:replace="favicon :: favicon"></div>
+    <title>YTUDAK | Giriş Yap</title>
 </head>
 <body class="text-center">
     <form class="form-signin" th:action="@{/login}" method="post">
-        <h1 class="h3 mb-3 font-weight-normal text-center">Sign in</h1>
-
+        <h1 class="h3 mb-3 font-weight-normal text-center">Giriş Yap</h1>
+        <hr>
+        <div class="text-center">
+            <img class="img-fluid" src="favicon/ytudak.svg" alt="" width="200" height="200">
+        </div>
         <br>
-        <h6 class="h6 mb-3 font-weight-normal text-center" th:if="${param.error}" style="color: red;">Invalid username or password.</h6>
-        <h6 class="h6 mb-3 font-weight-normal text-center" th:if="${param.success}">You have been logged out.</h6>
+        <h6 class="h6 mb-3 font-weight-normal text-center" th:if="${param.error}" style="color: red;">Hatalı kullanıcı adı veya parola.</h6>
+        <h6 class="h6 mb-3 font-weight-normal text-center" th:if="${param.success}">Başarıyla çıkış yapıldı.</h6>
 
 
-        <label for="username" class="sr-only">Username:</label>
-        <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="username" class="sr-only">Kullanıcı Adı</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="Kullanıcı adı" required autofocus>
 
-        <label for="password" class="sr-only">Password:</label><br>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        <label for="password" class="sr-only">Parola</label><br>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Parola" required>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Giriş Yap</button>
         <br>
 
         <p class="mt-5 mb-3 text-muted text-center">&copy; YTUDAK</p>

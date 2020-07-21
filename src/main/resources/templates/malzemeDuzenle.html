@@ -16,8 +16,15 @@
 
 <div th:insert="header:: menu"></div>
 
-<div class="container">
-    <h2>Malzemeler</h2>
+<div class="container-fluid">
+    <h2>Malzeme Düzenle - Sil</h2>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.silmesuccess}" style="color: green;">Silme isteği başarılı.</h6>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.silmefail}" style="color: red;">Silme isteği oluştururken hata meydana geldi!</h6>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.duzenlemeSuccess}" style="color: green;">Düzenleme isteği başarılı.</h6>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.duzenlemefail}" style="color: red;">Düzenleme isteği oluştururken hata meydana geldi!</h6>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.istekvar}" style="color: red;">Bu malzeme için zaten bir düzenleme isteği var!</h6>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.silmeistegivar}" style="color: red;">Bu malzeme için zaten bir silme isteği var!</h6>
+
     <div class="table-responsive">
         <table id="myTable" class="table table-striped">
             <thead>
@@ -32,6 +39,9 @@
                 <td scope=" col">Not</td>
                 <td scope=" col">Zimmet Durumu</td>
                 <td scope=" col"> Statü</td>
+                <td scope=" col"> Düzenle</td>
+                <td scope=" col"> Sil</td>
+
             </tr>
             </thead>
             <tbody>
@@ -50,56 +60,37 @@
                 <div th:switch="${malzeme.status}">
                     <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
                     <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
-                    <td th:case="${T(com.ytudak.malzeme.model.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
                     <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
                     <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
                 </div>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th> id </th>
-                <th> kategori </th>
-                <th> Tip </th>
-                <th> Model </th>
-                <th> isim </th>
-                <th> numara-boy </th>
-                <th> not </th>
-                <th>  Zimmet Durumu</th>
-                <th>  Statü</th>
+                <div th:switch="${malzeme.status}">
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}">
+                        <a th:href="@{/malzeme/duzenle/{id}(id=${malzeme.id})}">
+                            <button class="btn btn-danger pull-right">Düzenle</button>
+                        </a>
+                    </td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}">
+                        <a th:href="@{/malzeme/duzenle/{id}(id=${malzeme.id})}">
+                            <button class="btn btn-danger pull-right">Düzenle</button>
+                        </a>
+                    </td>
+                    <td th:case="*"></td>
+                </div>
+
+                <div th:switch="${malzeme.status}">
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}">
+                        <a th:href="@{/malzeme/sil/{id}(id=${malzeme.id})}">
+                            <button class="btn btn-danger pull-right">Sil</button>
+                        </a>
+                    </td>
+                    <td th:case="*"></td>
+                </div>
 
             </tr>
-            </tfoot>
+            </tbody>
         </table>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#myTable').DataTable( {
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        } );
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }
-        } );
-    } );
-</script>
-
 </body>
 </html>

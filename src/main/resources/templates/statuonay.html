@@ -10,22 +10,27 @@
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
         <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
         <div th:replace="favicon :: favicon"></div>
-        <title>Teslim Alma</title>
+        <title>Malzeme Zimmetleme</title>
     </head>
 <body>
+<!--
+@TODO
+tüm malzemeleri listele
+altına bir input form koy
+inputun altına bir submint button
+tabloyu seçlebilir yap
+controllera geç
 
+
+
+-->
 <div th:insert="header:: menu"></div>
 <div class="container">
-    <h2>Zimmetli Malzemeler</h2>
+    <h2>Malzemeler</h2>
     <div class="table-responsive">
         <table id="myTable" class="table table-striped">
             <thead>
             <tr style="font-weight: bold;">
-                <td scope=" col">Alan Kişi</td>
-                <td scope=" col">Veren Malzemeci</td>
-                <td scope=" col">Zimmetlenme Tarihi</td>
-                <td scope=" col">Zimmetlenme Notu</td>
-
                 <td scope=" col">#</td>
                 <td scope=" col">Kategori</td>
                 <td scope=" col">Tip</td>
@@ -33,67 +38,56 @@
                 <td scope=" col">İsim</td>
                 <td scope=" col">Numara-Boy</td>
                 <td scope=" col">Not</td>
+                <td scope=" col">Zimmet Durumu</td>
+                <td scope=" col"> Statü</td>
             </tr>
             </thead>
-
             <tbody id="malzemeBody">
-            <tr th:each="zimmet:${zimmetList}">
-                <td th:text="${zimmet.alanKisi}"></td>
-                <td th:text="${zimmet.verenMalzemeci}"></td>
-                <td th:text="${zimmet.verilmeTarihi}"></td>
-                <td th:text="${zimmet.verilmeNot}"></td>
+            <tr th:each="malzeme:${malzemelist}">
+                <td th:text="${malzeme.id}" name="id"></td>
+                <td th:text="${malzeme.kategori.kategori}"></td>
+                <td th:text="${malzeme.tip}"></td>
+                <td th:text="${malzeme.model}"></td>
+                <td th:text="${malzeme.isim}"></td>
+                <td th:text="${malzeme.numara_boy}"></td>
+                <td th:text="${malzeme.durum_not}"></td>
+                <div th:switch="${malzeme.aktiflik}">
+                    <td th:case="true">Kulüpte</td>
+                    <td th:case="false">Verilmiş</td>
+                </div>
+                <div th:switch="${malzeme.status}">
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
+                </div>
 
-                <td th:text="${zimmet.malzeme.id}"></td>
-                <td th:text="${zimmet.malzeme.kategori.kategori}"></td>
-                <td th:text="${zimmet.malzeme.tip}"></td>
-                <td th:text="${zimmet.malzeme.model}"></td>
-                <td th:text="${zimmet.malzeme.isim}"></td>
-                <td th:text="${zimmet.malzeme.numara_boy}"></td>
-                <td th:text="${zimmet.malzeme.durum_not}"></td>
             </tr>
             </tbody>
-
             <tfoot>
             <tr>
-                <th> Alan Kişi</th>
-                <th> Veren Malzemeci</th>
-                <th> Verilme Tarihi</th>
-                <th> Verilme Not</th>
-
-                <th> id </th>
+                <th></th>
                 <th> kategori</th>
                 <th> Tip</th>
                 <th> Model</th>
                 <th> isim</th>
                 <th> numara-boy</th>
                 <th> not</th>
+                <th> Zimmet Durumu</th>
+                <th>  Statü</th>
             </tr>
             </tfoot>
         </table>
     </div>
 
-    <form th:action="@{/zimmetal/teslimAl}" method="post">
-        <div class="form-group">
-            <label for="getirenKisi">Getiren Kisi</label>
-            <input class="form-control" type="text" id="getirenKisi" name="getirenKisi" placeholder="getirenKisi" required>
-        </div>
-        <div class="form-group">
-            <label for="teslimAlanMalzemeci">Teslim Alan Malzemeci</label>
-            <input class="form-control" type="text" id="teslimAlanMalzemeci" name="teslimAlanMalzemeci"
-                   placeholder="teslimAlanMalzemeci" required>
-        </div>
-        <div class="form-group">
-            <label for="teslimNot">Teslim Not</label>
-            <input class="form-control" type="text" id="teslimNot" name="teslimNot" placeholder="teslimNot" required>
-        </div>
+    <form th:action="@{/statuonay/onay}" method="post" id="zimmetForm">
         <!-- hidden input -->
         <div class="form-group" style="display: none;">
             <input class="form-control" type="text" id="malzemeNoList" name="malzemeNoList" required readonly hidden>
         </div>
-
-        <div class="form-group">
-            <button id="button" type="submit" class="btn btn-primary">Teslim Al</button>
-        </div>
+<br>
+            <button id="button" type="submit" class="form-control btn btn-primary">Onayla!</button>
 
     </form>
 
@@ -135,7 +129,7 @@
                 } else {
                     var idArray = [];
                     for (var i = 0; i < secilenliste.length; i++) {
-                        idArray.push(secilenliste[i][4]);
+                        idArray.push(secilenliste[i][0]);
                     }
                     $("#malzemeNoList").val(idArray.join(",").toString());
                 }

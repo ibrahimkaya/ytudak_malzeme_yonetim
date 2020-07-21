@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <div th:replace="favicon :: favicon"></div>
-    <title>Sonuç Listeleri</title>
+    <title>Onaylanmış Malzeme Listesi</title>
 </head>
 <body>
 
@@ -18,62 +18,42 @@
 <div class="container">
     <h2>Basarili sonuclar</h2>
     <div class="table-responsive">
-        <table id="myTable" class="table table-striped">
+        <table id="successTable" class="table table-striped">
             <thead>
             <tr style="font-weight: bold;">
-                <td scope=" col">Alan Kişi</td>
-                <td scope=" col">Veren Malzemeci</td>
-                <td scope=" col">Zimmetlenme Tarihi</td>
-                <td scope=" col">Zimmetlenme Notu</td>
-
                 <td scope=" col">#</td>
                 <td scope=" col">Kategori</td>
                 <td scope=" col">Tip</td>
                 <td scope=" col">Model</td>
                 <td scope=" col">İsim</td>
                 <td scope=" col">Numara-Boy</td>
-                <td scope=" col">Not</td>
+                <td scope=" col">Yeni Statü</td>
+
             </tr>
             </thead>
-
             <tbody id="malzemeBody">
-            <tr th:each="zimmet:${successList}">
-                <td th:text="${zimmet.alanKisi}"></td>
-                <td th:text="${zimmet.verenMalzemeci}"></td>
-                <td th:text="${zimmet.verilmeTarihi}"></td>
-                <td th:text="${zimmet.verilmeNot}"></td>
+            <tr th:each="malzeme:${successList}">
+                <td th:text="${malzeme.id}"></td>
+                <td th:text="${malzeme.kategori.kategori}"></td>
+                <td th:text="${malzeme.tip}"></td>
+                <td th:text="${malzeme.model}"></td>
+                <td th:text="${malzeme.isim}"></td>
+                <td th:text="${malzeme.numara_boy}"></td>
+                <div th:switch="${malzeme.status}">
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.model.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
+                </div>
 
-                <td th:text="${zimmet.malzeme.id}"></td>
-                <td th:text="${zimmet.malzeme.kategori.kategori}"></td>
-                <td th:text="${zimmet.malzeme.tip}"></td>
-                <td th:text="${zimmet.malzeme.model}"></td>
-                <td th:text="${zimmet.malzeme.isim}"></td>
-                <td th:text="${zimmet.malzeme.numara_boy}"></td>
-                <td th:text="${zimmet.malzeme.durum_not}"></td>
             </tr>
             </tbody>
-
-            <tfoot>
-            <tr>
-                <th> Alan Kişi</th>
-                <th> Veren Malzemeci</th>
-                <th> Verilme Tarihi</th>
-                <th> Verilme Not</th>
-
-                <th> id </th>
-                <th> kategori</th>
-                <th> Tip</th>
-                <th> Model</th>
-                <th> isim</th>
-                <th> numara-boy</th>
-                <th> not</th>
-            </tr>
-            </tfoot>
         </table>
 
     </div>
     <hr>
-    <div  th:if= "${hataList.size() != 0}">
+    <div  th:if= "${failList.size() != 0}">
         <h2>hata olan sonuclar</h2>
         <div class="table-responsive">
             <table id="failTable" class="table table-striped">
@@ -85,41 +65,32 @@
                     <td scope=" col">Model</td>
                     <td scope=" col">İsim</td>
                     <td scope=" col">Numara-Boy</td>
+                    <td scope=" col">Statü</td>
+
                 </tr>
                 </thead>
                 <tbody >
-                <tr th:each="malzeme:${hataList}">
+                <tr th:each="malzeme:${failList}">
                     <td th:text="${malzeme.id}"></td>
                     <td th:text="${malzeme.kategori.kategori}"></td>
                     <td th:text="${malzeme.tip}"></td>
                     <td th:text="${malzeme.model}"></td>
                     <td th:text="${malzeme.isim}"></td>
                     <td th:text="${malzeme.numara_boy}"></td>
+                    <div th:switch="${malzeme.status}">
+                        <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
+                        <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
+                        <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
+                        <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
+                    </div>
+
                 </tr>
                 </tbody>
             </table>
         </div>
         <hr>
     </div>
-    <h2>Teslim alınma kisi bilgisi</h2>
-    <div class="table-responsive">
-        <table id="zimmetTable" class="table table-striped">
-            <thead>
-            <tr style="font-weight: bold;">
-                <td scope=" col">Getiren kişi</td>
-                <td scope=" col">Teslim alan Malzemeci</td>
-                <td scope=" col">Teslim Not</td>
-            </tr>
-            </thead>
-            <tbody >
-            <tr >
-                <td th:text="${teslim.getirenKisi}"></td>
-                <td th:text="${teslim.teslimAlanMalzemeci}"></td>
-                <td th:text="${teslim.teslimNot}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <input class="form-control btn btn-primary" type="button" onclick="window.location.href='/statuonay';" value="Geri Dön" />
 </div>
 
 
@@ -131,16 +102,7 @@
         $('#failTable').DataTable({
             "info":     false
         });
-        $('#zimmetTable').DataTable({
-            "paging":   false,
-            "ordering": false,
-            "info":     false,
-            "search": false,
-            "searching": false
-        });
     });
 </script>
-
-
 </body>
 </html>
