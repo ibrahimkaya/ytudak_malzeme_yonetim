@@ -17,6 +17,11 @@ public interface MalzemeRepository  extends JpaRepository<Malzeme, Long> {
     @Query(value = "select * from Malzeme where Malzeme .aktiflik = true AND Malzeme.status = 1 ", nativeQuery = true )
     List<Malzeme> findActiveItems();
 
-    @Query(value = "select * from Malzeme where Malzeme.status = 2 or Malzeme.status = 3",nativeQuery = true)
+    @Query(value = "select * from Malzeme where Malzeme.status = 2 or Malzeme.status = 3 or Malzeme.status = 4",nativeQuery = true)
     List<Malzeme> findWaitingItems();
+
+    @Query(value = "select * from Malzeme where Malzeme.status = 1 or Malzeme.status = 3 or Malzeme.status = 4 or Malzeme.status = 5",nativeQuery = true)
+    List<Malzeme> findEditableItems();
+
+
 }
