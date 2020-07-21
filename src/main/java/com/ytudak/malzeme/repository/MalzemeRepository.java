@@ -13,7 +13,10 @@ import java.util.Optional;
 @Repository
 public interface MalzemeRepository  extends JpaRepository<Malzeme, Long> {
 
-    @Query(value = "select * from Malzeme where Malzeme .aktiflik = true", nativeQuery = true )
+    /* zimmet için malzemenin kulüpte olması ve statüsü kullanılabilir olması gerekli
+        status = 1 değeri enum Status clasının 'KULLANILABİLİR' indexinden gelir
+    */
+    @Query(value = "select * from Malzeme where Malzeme .aktiflik = true AND Malzeme.status = 1 ", nativeQuery = true )
     List<Malzeme> findActiveItems();
 
 }

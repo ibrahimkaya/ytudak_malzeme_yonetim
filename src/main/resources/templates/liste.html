@@ -30,6 +30,7 @@
                 <td scope=" col">Numara-Boy</td>
                 <td scope=" col">Not</td>
                 <td scope=" col">Zimmet Durumu</td>
+                <td scope=" col"> Statü</td>
             </tr>
             </thead>
             <tbody>
@@ -45,7 +46,7 @@
                     <td th:case="true">Kulüpte</td>
                     <td th:case="false">Verilmiş</td>
                 </div>
-
+                <td th:text="${malzeme.status}"></td>
             </tr>
             </tbody>
             <tfoot>
@@ -58,6 +59,8 @@
                 <th> numara-boy </th>
                 <th> not </th>
                 <th>  Zimmet Durumu</th>
+                <th>  Statü</th>
+
             </tr>
             </tfoot>
         </table>
