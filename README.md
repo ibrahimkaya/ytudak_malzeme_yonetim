@@ -51,11 +51,14 @@ USER   user   - 123
 ### Login Page
 [http://localhost:8080/login](http://localhost:8080/login)
 
----
+### Authors
+* [İbrahim Kaya](https://github.com/ibrahimkaya)
+* [Ufuk Güler](https://github.com/ufukguler)
+
+
 
 License
-----
-
+--- 
 MIT
 
 
