@@ -1,17 +1,16 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.Malzeme;
-import com.ytudak.malzeme.model.MalzemeDuzenle;
-import com.ytudak.malzeme.model.Status;
-import com.ytudak.malzeme.model.Zimmet;
+import com.ytudak.malzeme.model.*;
 import com.ytudak.malzeme.repository.MalzemeDuzenleRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +52,7 @@ public class StatuController {
                 } else if (tempMalzeme.get().getStatus() == Status.DUZENLEME_BEKLIYOR) {
                     // malzemenin yeni halini aldım
                     Optional<MalzemeDuzenle> malzemeDuzenle = malzemeDuzenleRepository.findByMalzemeNo(tempMalzeme.get().getId());
-                    if(malzemeDuzenle.isPresent()){
+                    if (malzemeDuzenle.isPresent()) {
                         tempMalzeme.get().setKategori(malzemeDuzenle.get().getKategori());
                         tempMalzeme.get().setTip(malzemeDuzenle.get().getTip());
                         tempMalzeme.get().setModel(malzemeDuzenle.get().getModel());
@@ -83,25 +82,47 @@ public class StatuController {
         return "statuonaysonuc";
     }
 
-    private List<Malzeme> formatter(){
+    private List<Malzeme> formatter() {
         List<Malzeme> malzemeList = malzemeRepository.findWaitingItems();
 
         MalzemeDuzenle tempMalzeme;
 
-        for(Malzeme malzeme: malzemeList){
+        for (Malzeme malzeme : malzemeList) {
 
-            if(malzeme.getStatus().equals( Status.DUZENLEME_BEKLIYOR)){
+            if (malzeme.getStatus().equals(Status.DUZENLEME_BEKLIYOR)) {
 
-                tempMalzeme = malzemeDuzenleRepository.findById(malzeme.getId()).get();
-
-                malzeme.setTip(malzeme.getTip() + " -> "+ tempMalzeme.getTip());
-                malzeme.setModel(malzeme.getModel() + " -> "+ tempMalzeme.getModel());
-                malzeme.setIsim(malzeme.getIsim() + " -> "+ tempMalzeme.getIsim());
-                malzeme.setNumara_boy(malzeme.getNumara_boy() + " -> "+ tempMalzeme.getNumara_boy());
-                malzeme.setDurum_not(malzeme.getDurum_not() + " -> "+ tempMalzeme.getDurum_not());
+                tempMalzeme = malzemeDuzenleRepository.findByMalzemeNo(malzeme.getId()).get();
+                malzeme.setKategori(new Kategori(malzeme.getKategori().getKategori() + " -> " + tempMalzeme.getKategori().getKategori()));
+                malzeme.setTip(malzeme.getTip() + " -> " + tempMalzeme.getTip());
+                malzeme.setModel(malzeme.getModel() + " -> " + tempMalzeme.getModel());
+                malzeme.setIsim(malzeme.getIsim() + " -> " + tempMalzeme.getIsim());
+                malzeme.setNumara_boy(malzeme.getNumara_boy() + " -> " + tempMalzeme.getNumara_boy());
+                malzeme.setDurum_not(malzeme.getDurum_not() + " -> " + tempMalzeme.getDurum_not());
             }
         }
-        return  malzemeList;
+        return malzemeList;
+    }
+
+    @Transactional
+    @GetMapping("/statuonay/reddet/{id}")
+    public String reddet(@PathVariable("id") Long id) {
+        Optional<Malzeme> malzeme = malzemeRepository.findById(id);
+        if (malzeme.isPresent()) {
+            // eklenme onaylanmazsa tamamen sil
+            if (malzeme.get().getStatus().equals(Status.ONAY_BEKLIYOR)) {
+                malzemeRepository.deleteById(id);
+                // duzenleme onaylamazsa statu guncelle ve duzenleme tablosundan sil
+            } else if (malzeme.get().getStatus().equals(Status.DUZENLEME_BEKLIYOR)) {
+                malzeme.get().setStatus(Status.KULLANILABILIR);
+                malzemeRepository.save(malzeme.get());
+                // duzenleme tablosundan sil
+                malzemeDuzenleRepository.deleteByMalzemeNo(id);
+            } else { // silme isteğini reddet
+                malzeme.get().setStatus(Status.KULLANILABILIR);
+                malzemeRepository.save(malzeme.get());
+            }
+        }
+        return "redirect:/statuonay";
     }
 
 }

@@ -1,7 +1,5 @@
 package com.ytudak.malzeme.model;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,42 +7,25 @@ public class MalzemeDuzenle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     private Long malzemeNo;
-
-    @ManyToOne
-    @JoinColumn(name = "kategoriID")
-    private Kategori kategori;
-
-    @Value("")
+    @ManyToOne @JoinColumn(name = "kategoriID") private Kategori kategori;
     private String tip;
-    @Value("")
     private String model;
-    @Value("")
     private String isim;
-    @Value("")
     private String numara_boy;
-    @Value("")
     private String durum_not;
-
-    // kulüpte mi - zimmetlenmiş mi ayrimi icin
     private Boolean aktiflik = true;
-    // malzeme onaylanmis mi - kullanim disi mi - kullanilabilir mi ayrimi icin
-    //
+    private Status status;
 
     public MalzemeDuzenle() {
     }
 
-    public MalzemeDuzenle(Long malzemeNo, Kategori kategori, String tip, String model, String isim, String numara_boy, String durum_not, Boolean aktiflik) {
-        this.malzemeNo = malzemeNo;
-        this.kategori = kategori;
-        this.tip = tip;
-        this.model = model;
-        this.isim = isim;
-        this.numara_boy = numara_boy;
-        this.durum_not = durum_not;
-        this.aktiflik = aktiflik;
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Long getId() {

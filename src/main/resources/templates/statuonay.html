@@ -30,6 +30,7 @@
                 <td scope=" col">Not</td>
                 <td scope=" col">Zimmet Durumu</td>
                 <td scope=" col"> Statü</td>
+                <td scope=" col"></td>
             </tr>
             </thead>
             <tbody id="malzemeBody">
@@ -52,7 +53,11 @@
                     <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
                     <td th:case="${T(com.ytudak.malzeme.model.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
                 </div>
-
+                <td>
+                    <a th:href="@{/statuonay/reddet/{id}(id=${malzeme.id})}">
+                        <button class="btn btn-danger pull-right">Reddet</button>
+                    </a>
+                </td>
             </tr>
             </tbody>
             <tfoot>
@@ -65,7 +70,7 @@
                 <th> numara-boy</th>
                 <th> not</th>
                 <th> Zimmet Durumu</th>
-                <th>  Statü</th>
+                <th> Statü</th>
             </tr>
             </tfoot>
         </table>
@@ -76,11 +81,10 @@
         <div class="form-group" style="display: none;">
             <input class="form-control" type="text" id="malzemeNoList" name="malzemeNoList" required readonly hidden>
         </div>
-<br>
-            <button id="button" type="submit" class="form-control btn btn-primary">Onayla!</button>
+        <br>
+        <button id="button" type="submit" class="form-control btn btn-primary">Onayla!</button>
 
     </form>
-
     <script>
         $(document).ready(function () {
             var table = $('#myTable').DataTable({
