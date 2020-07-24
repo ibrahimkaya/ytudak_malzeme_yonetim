@@ -115,21 +115,20 @@ public class MalzemeController {
     public String malzemeDuzenleRequest(Malzeme malzeme, RedirectAttributes redirectAttributes) {
         // gelen malzemeyi al
         Optional<Malzeme> gelenMalzeme = malzemeRepository.findById(malzeme.getId());
+        Malzeme guncellenecek = gelenMalzeme.get();
         // eger boyle bir malzem yoksa hata donsun
         if(!gelenMalzeme.isPresent()){
             redirectAttributes.addAttribute("duzenlemefail","");
             return "redirect:/malzemeduzenle";
         }
 
-        // statü setledi
-        gelenMalzeme.get().setKategori(gelenMalzeme.get().getKategori());
-        gelenMalzeme.get().setStatus(Status.DUZENLEME_BEKLIYOR);
+        // yeni statü setle
+        guncellenecek.setStatus(Status.DUZENLEME_BEKLIYOR);
         // update et
         malzemeRepository.save(gelenMalzeme.get());
 
         // duzenlecekler tablosuna eklenecek olan malzeme
         MalzemeDuzenle duzenlenecek = new MalzemeDuzenle();
-
         duzenlenecek.setMalzemeNo(malzeme.getId());
         duzenlenecek.setKategori(kategoriRepository.findByKategori(malzeme.getKategori().getKategori()).get());
         duzenlenecek.setTip(malzeme.getTip());
@@ -138,7 +137,7 @@ public class MalzemeController {
         duzenlenecek.setNumara_boy(malzeme.getNumara_boy());
         duzenlenecek.setDurum_not(malzeme.getDurum_not());
         duzenlenecek.setAktiflik(malzeme.getAktiflik());
-
+        duzenlenecek.setStatus(Status.DUZENLEME_BEKLIYOR);
         // duzenlenecek tablosuna ekle
         malzemeDuzenleRepository.save(duzenlenecek);
         redirectAttributes.addAttribute("duzenlemeSuccess","");
