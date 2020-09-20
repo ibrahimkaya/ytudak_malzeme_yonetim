@@ -1,4 +1,4 @@
-package com.ytudak.malzeme.services;
+package com.ytudak.malzeme.config;
 
 import com.ytudak.malzeme.model.User;
 import org.springframework.security.core.GrantedAuthority;
