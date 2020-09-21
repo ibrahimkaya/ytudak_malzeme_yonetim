@@ -1,6 +1,6 @@
 package com.ytudak.malzeme.repository;
 
-import com.ytudak.malzeme.model.Zimmet;
+import com.ytudak.malzeme.entity.Zimmet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;

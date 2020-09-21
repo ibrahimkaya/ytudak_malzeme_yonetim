@@ -1,4 +1,4 @@
-package com.ytudak.malzeme.model;
+package com.ytudak.malzeme.entity;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

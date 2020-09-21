@@ -1,7 +1,7 @@
 package com.ytudak.malzeme.repository;
 
 
-import com.ytudak.malzeme.model.User;
+import com.ytudak.malzeme.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

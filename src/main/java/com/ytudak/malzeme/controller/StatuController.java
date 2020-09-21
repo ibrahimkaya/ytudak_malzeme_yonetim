@@ -1,6 +1,6 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.*;
+import com.ytudak.malzeme.entity.*;
 import com.ytudak.malzeme.repository.MalzemeDuzenleRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

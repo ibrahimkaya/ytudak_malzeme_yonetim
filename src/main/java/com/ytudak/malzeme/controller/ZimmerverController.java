@@ -1,7 +1,7 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.Malzeme;
-import com.ytudak.malzeme.model.Zimmet;
+import com.ytudak.malzeme.entity.Malzeme;
+import com.ytudak.malzeme.entity.Zimmet;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,9 +65,9 @@ public class ZimmerverController {
                 hataList.add(tempMalzeme.get());
             }
 
-            model.addAttribute("hataList",hataList);
+            model.addAttribute("hataList", hataList);
             model.addAttribute("successList", successList);
-            model.addAttribute("zimmet",zimmet);
+            model.addAttribute("zimmet", zimmet);
         }
         // return degisecek
         return "sonuc";

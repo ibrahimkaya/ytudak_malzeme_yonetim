@@ -1,4 +1,4 @@
-package com.ytudak.malzeme.model;
+package com.ytudak.malzeme.entity;
 
 /***
  * @see Malzeme

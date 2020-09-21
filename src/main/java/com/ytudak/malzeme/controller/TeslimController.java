@@ -1,14 +1,13 @@
 package com.ytudak.malzeme.controller;
 
 
-import com.ytudak.malzeme.model.Malzeme;
-import com.ytudak.malzeme.model.Teslim;
-import com.ytudak.malzeme.model.Zimmet;
+import com.ytudak.malzeme.entity.Malzeme;
+import com.ytudak.malzeme.entity.Teslim;
+import com.ytudak.malzeme.entity.Zimmet;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.TeslimRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,26 +30,26 @@ public class TeslimController {
     TeslimRepository teslimRepository;
 
     @GetMapping("/zimmetal")
-    public String teslim(Model model){
+    public String teslim(Model model) {
 
-       List<Zimmet> zimmetList = zimmetRepository.findAll();
+        List<Zimmet> zimmetList = zimmetRepository.findAll();
 
        /*zimmetlenmiş malzemelerin malzeme no bilgileri ile
         zimmet entity yapısındaki @transient malzeme değişkenine o bilgileri gerçirmek
 
         teslim almak için hem zimmet bilgileri hemde malzemelerin kendi bilgileri gereklidir
         */
-       for(Zimmet z: zimmetList ){
-           z.setMalzeme( malzemeRepository.findById( z.getMalzemeNo()).get());
-       }
+        for (Zimmet z : zimmetList) {
+            z.setMalzeme(malzemeRepository.findById(z.getMalzemeNo()).get());
+        }
 
-       model.addAttribute("zimmetList", zimmetList);
+        model.addAttribute("zimmetList", zimmetList);
 
         return "zimmetal";
     }
 
     @PostMapping("/zimmetal/teslimAl")
-    public String teslimAl(Teslim teslim, Model model){
+    public String teslimAl(Teslim teslim, Model model) {
 
         List<Malzeme> secilenMalzemeList = new ArrayList<>();
         List<Zimmet> secilenZimmetList = new ArrayList<>();
@@ -87,7 +86,7 @@ public class TeslimController {
     }
 
     @PostMapping("/teslim/teslimAl/onay")
-    public String teslimOnay(Zimmet zimmet,Teslim teslim, Model model) {
+    public String teslimOnay(Zimmet zimmet, Teslim teslim, Model model) {
 
         List<Malzeme> hataList = new ArrayList<>();
         List<Zimmet> successList = new ArrayList<>();
@@ -128,9 +127,9 @@ public class TeslimController {
                 hataList.add(tempMalzeme.get());
             }
 
-            model.addAttribute("hataList",hataList);
+            model.addAttribute("hataList", hataList);
             model.addAttribute("successList", successList);
-            model.addAttribute("teslim",teslim);
+            model.addAttribute("teslim", teslim);
         }
         // return degisecek
         return "sonucteslim";

@@ -1,7 +1,7 @@
 package com.ytudak.malzeme.services;
 
-import com.ytudak.malzeme.model.Teslim;
-import com.ytudak.malzeme.model.Zimmet;
+import com.ytudak.malzeme.entity.Teslim;
+import com.ytudak.malzeme.entity.Zimmet;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.TeslimRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
