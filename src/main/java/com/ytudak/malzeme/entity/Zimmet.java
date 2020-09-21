@@ -22,11 +22,6 @@ public class Zimmet {
 
     private Long malzemeNo;
 
-    // veri tabanında olusmayacak
-    // formda gonderilen malzeme id lerini tutmasi icin var sadece
-    @Transient
-    private String malzemeNoList;
-
     @Transient
     private Malzeme malzeme;
 

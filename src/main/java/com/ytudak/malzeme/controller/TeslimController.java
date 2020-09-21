@@ -4,6 +4,7 @@ package com.ytudak.malzeme.controller;
 import com.ytudak.malzeme.entity.Malzeme;
 import com.ytudak.malzeme.entity.Teslim;
 import com.ytudak.malzeme.entity.Zimmet;
+import com.ytudak.malzeme.model.ZimmetDTO;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.TeslimRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
@@ -86,13 +87,13 @@ public class TeslimController {
     }
 
     @PostMapping("/teslim/teslimAl/onay")
-    public String teslimOnay(Zimmet zimmet, Teslim teslim, Model model) {
+    public String teslimOnay(ZimmetDTO zimmetDTO, Teslim teslim, Model model) {
 
         List<Malzeme> hataList = new ArrayList<>();
         List<Zimmet> successList = new ArrayList<>();
 
         // malzemeNoList' ten id leri al
-        String[] malzemeList = zimmet.getMalzemeNoList().split(",");
+        String[] malzemeList = zimmetDTO.getMalzemeNoList().split(",");
         // iterate id
 
         for (String id : malzemeList) {

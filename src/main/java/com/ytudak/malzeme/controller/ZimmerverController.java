@@ -2,6 +2,7 @@ package com.ytudak.malzeme.controller;
 
 import com.ytudak.malzeme.entity.Malzeme;
 import com.ytudak.malzeme.entity.Zimmet;
+import com.ytudak.malzeme.model.ZimmetDTO;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,13 @@ public class ZimmerverController {
     }
 
     @PostMapping("/zimmetver/zimmetle/onay")
-    public String zimmetOnay(Zimmet zimmet, Model model) {
-        System.out.println(zimmet.toString());
+    public String zimmetOnay(ZimmetDTO zimmetDTO, Model model) {
 
         List<Malzeme> hataList = new ArrayList<>();
         List<Malzeme> successList = new ArrayList<>();
 
         // malzemeNoList' ten id leri al
-        String[] malzemeList = zimmet.getMalzemeNoList().split(",");
+        String[] malzemeList = zimmetDTO.getMalzemeNoList().split(",");
         // iterate id
         for (String id : malzemeList) {
 
@@ -55,9 +55,9 @@ public class ZimmerverController {
                 //gelen zimmet bilgilerinden yeni bir zimmet objesi oluştur
                 Zimmet tempZimmet = new Zimmet();
                 tempZimmet.setMalzemeNo(Long.valueOf(id));
-                tempZimmet.setAlanKisi(zimmet.getAlanKisi());
-                tempZimmet.setVerenMalzemeci(zimmet.getVerenMalzemeci());
-                tempZimmet.setVerilmeNot(zimmet.getVerilmeNot());
+                tempZimmet.setAlanKisi(zimmetDTO.getAlanKisi());
+                tempZimmet.setVerenMalzemeci(zimmetDTO.getVerenMalzemeci());
+                tempZimmet.setVerilmeNot(zimmetDTO.getVerilmeNot());
                 zimmetRepository.save(tempZimmet);
 
             } else {
@@ -67,19 +67,19 @@ public class ZimmerverController {
 
             model.addAttribute("hataList", hataList);
             model.addAttribute("successList", successList);
-            model.addAttribute("zimmet", zimmet);
+            model.addAttribute("zimmet", zimmetDTO);
         }
         // return degisecek
         return "sonuc";
     }
 
     @PostMapping("/zimmetver/zimmetle")
-    public String zimmetle(Zimmet zimmet, Model model) {
+    public String zimmetle(ZimmetDTO zimmetDTO, Model model) {
         // secilenleri buna eklicem
         List<Malzeme> secilenMalzemeList = new ArrayList<>();
 
         // formdan gelen malzemelerin id lerini aliyorum.
-        String[] malzemeList = zimmet.getMalzemeNoList().split(",");
+        String[] malzemeList = zimmetDTO.getMalzemeNoList().split(",");
 
         // id leri tektek alicam ve bunlari yollicam.
         for (String id : malzemeList) {
@@ -97,7 +97,7 @@ public class ZimmerverController {
             }
         }
         // alan kisi bilgilerini bundan alicam
-        model.addAttribute("kisi", zimmet);
+        model.addAttribute("kisi", zimmetDTO);
         // secilenleri yolla
         model.addAttribute("secilenler", secilenMalzemeList);
 
