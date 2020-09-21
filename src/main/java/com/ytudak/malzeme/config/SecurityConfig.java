@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/malzemeEkle","/malzemesil","/malzemeDuzenle","/malzeme","/malzeme/*","/malzeme/*/*").hasRole("ADMIN")
                 .antMatchers("/kategoriEkle").hasRole("ADMIN")
                 //sadece baskan
-                .antMatchers("/statuonay","/statuonay/onay","/statuonaysonuc").hasRole("BASKAN")
+                .antMatchers("/malzemeDuzenle ","/malzemeDuzenle /onay","/malzemeDuzenleSonuc").hasRole("BASKAN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

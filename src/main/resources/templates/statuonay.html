@@ -54,7 +54,7 @@
                     <td th:case="${T(com.ytudak.malzeme.entity.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
                 </div>
                 <td>
-                    <a th:href="@{/statuonay/reddet/{id}(id=${malzeme.id})}">
+                    <a th:href="@{/onay/malzemeDuzenle/reddet/{id}(id=${malzeme.id})}">
                         <button class="btn btn-danger pull-right">Reddet</button>
                     </a>
                 </td>
@@ -76,7 +76,7 @@
         </table>
     </div>
 
-    <form th:action="@{/statuonay/onay}" method="post" id="zimmetForm">
+    <form th:action="@{/onay/malzemeDuzenle/onay}" method="post" id="zimmetForm">
         <!-- hidden input -->
         <div class="form-group" style="display: none;">
             <input class="form-control" type="text" id="malzemeNoList" name="malzemeNoList" required readonly hidden>

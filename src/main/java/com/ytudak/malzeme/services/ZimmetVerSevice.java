@@ -1,6 +1,7 @@
 package com.ytudak.malzeme.services;
 
 import com.ytudak.malzeme.entity.Malzeme;
+import com.ytudak.malzeme.entity.Status;
 import com.ytudak.malzeme.entity.Zimmet;
 import com.ytudak.malzeme.model.ZimmetDTO;
 import com.ytudak.malzeme.repository.MalzemeRepository;
@@ -26,7 +27,13 @@ public class ZimmetVerSevice {
     }
 
     public void getAll(Model model) {
-        model.addAttribute("malzemelist", malzemeRepository.findActiveItems());
+        List<Malzeme> malzemeList = new ArrayList<>();
+        for(Malzeme malzeme : malzemeRepository.findAllByAktiflikIsTrue()){
+            if(malzeme.getStatus() == Status.KULLANILABILIR){
+                malzemeList.add(malzeme);
+            }
+        }
+        model.addAttribute("malzemelist", malzemeList);
     }
 
     public void zimmetOnay(ZimmetDTO zimmetDTO, Model model) {

@@ -8,9 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping("/onay")
 public class MalzemeDuzenleController {
 
     private MalzemeDuzenleService malzemeDuzenleService;
@@ -20,21 +22,21 @@ public class MalzemeDuzenleController {
         this.malzemeDuzenleService = malzemeDuzenleService;
     }
 
-    @GetMapping("/statuonay")
+    @GetMapping("/malzemeDuzenle")
     public String onayBekleyenler(Model model) {
         malzemeDuzenleService.getPendingApproval(model);
         return "statuonay";
     }
 
-    @PostMapping("/statuonay/onay")
+    @PostMapping("/malzemeDuzenle/onay")
     public String approve(ZimmetDTO zimmetDTO, Model model) {
         malzemeDuzenleService.approve(zimmetDTO, model);
         return "statuonaysonuc";
     }
 
-    @GetMapping("/statuonay/reddet/{id}")
+    @GetMapping("/malzemeDuzenle/reddet/{id}")
     public String reject(@PathVariable("id") Long id) {
         malzemeDuzenleService.reject(id);
-        return "redirect:/statuonay";
+        return "redirect:/onay/malzemeDuzenle ";
     }
 }
