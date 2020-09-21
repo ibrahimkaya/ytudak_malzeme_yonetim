@@ -1,5 +1,6 @@
-package com.ytudak.malzeme.entity;
+package com.ytudak.malzeme.model;
 
+import com.ytudak.malzeme.entity.Malzeme;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,29 +12,22 @@ import java.util.Date;
  * Bir kullanıcının kulüpten malzeme aldığında oluşan kayıdın tutulduğu model
  */
 
-@Entity
 @Data
-@RequiredArgsConstructor
-public class Zimmet {
+public class ZimmetDTO {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
     private Long id;
 
     private Long malzemeNo;
 
-    @Transient
+    private String malzemeNoList;
+
     private Malzeme malzeme;
 
     private String alanKisi;
 
     private String verenMalzemeci;
 
-    //üyenin malzemeyi kulüpten teslim aldığı tarih
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
     private Date verilmeTarihi;
 
     private String verilmeNot;
-
 }

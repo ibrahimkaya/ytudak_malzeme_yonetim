@@ -1,40 +1,74 @@
-package com.ytudak.malzeme.controller;
+package com.ytudak.malzeme.services;
 
-import com.ytudak.malzeme.entity.*;
+import com.ytudak.malzeme.entity.Kategori;
+import com.ytudak.malzeme.entity.Malzeme;
+import com.ytudak.malzeme.entity.MalzemeDuzenle;
+import com.ytudak.malzeme.entity.Status;
+import com.ytudak.malzeme.model.ZimmetDTO;
 import com.ytudak.malzeme.repository.MalzemeDuzenleRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
-public class StatuController {
+@Service
+public class MalzemeDuzenleService {
 
-    @Autowired
     private MalzemeRepository malzemeRepository;
 
-    @Autowired
     private MalzemeDuzenleRepository malzemeDuzenleRepository;
 
-    @GetMapping("/statuonay")
-    public String onayBekleyenler(Model model) {
-
-        model.addAttribute("malzemelist", formatter());
-        return "statuonay";
+    @Autowired
+    public MalzemeDuzenleService(MalzemeRepository malzemeRepository, MalzemeDuzenleRepository malzemeDuzenleRepository) {
+        this.malzemeRepository = malzemeRepository;
+        this.malzemeDuzenleRepository = malzemeDuzenleRepository;
     }
 
-    @PostMapping("/statuonay/onay")
-    public String onayla(Zimmet zimmet, Model model) {
+    public void getPendingApproval(Model model) {
+        model.addAttribute("malzemelist", formatter());
+    }
 
-        String[] malzemeList = zimmet.getMalzemeNoList().split(",");
+    /***
+     * creating items image for update
+     *  oldProps -> newProps
+     */
+    private List<Malzeme> formatter() {
+        List<Malzeme> malzemeList = malzemeRepository.findWaitingItems();
+
+        MalzemeDuzenle tempMalzeme;
+
+        for (Malzeme malzeme : malzemeList) {
+
+            if (malzeme.getStatus().equals(Status.DUZENLEME_BEKLIYOR)) {
+
+                tempMalzeme = malzemeDuzenleRepository.findByMalzemeNo(malzeme.getId()).get();
+
+                Kategori kategori = new Kategori();
+                kategori.setKategori(malzeme.getKategori().getKategori() + " -> " + tempMalzeme.getKategori().getKategori());
+                malzeme.setTip(malzeme.getTip() + " -> " + tempMalzeme.getTip());
+                malzeme.setModel(malzeme.getModel() + " -> " + tempMalzeme.getModel());
+                malzeme.setIsim(malzeme.getIsim() + " -> " + tempMalzeme.getIsim());
+                malzeme.setNumara_boy(malzeme.getNumara_boy() + " -> " + tempMalzeme.getNumara_boy());
+                malzeme.setDurum_not(malzeme.getDurum_not() + " -> " + tempMalzeme.getDurum_not());
+            }
+        }
+        return malzemeList;
+    }
+
+    /***
+     * onaylanacak malzemeleri alır
+     * onay bekleyenleri ekler
+     * silme bekleyenleri kullanılmaz olarak değiştirir
+     * düzenleme bekleyenleri ise yeni değerleri ile değiştirerek kayderder
+     * @param zimmetDTO
+     * @param model
+     */
+    public void approve(ZimmetDTO zimmetDTO, Model model) {
+        String[] malzemeList = zimmetDTO.getMalzemeNoList().split(",");
 
         List<Malzeme> successList = new ArrayList<>();
         List<Malzeme> failList = new ArrayList<>();
@@ -78,36 +112,13 @@ public class StatuController {
             model.addAttribute("failList", failList);
             model.addAttribute("successList", successList);
         }
-
-        return "statuonaysonuc";
     }
 
-    private List<Malzeme> formatter() {
-        List<Malzeme> malzemeList = malzemeRepository.findWaitingItems();
-
-        MalzemeDuzenle tempMalzeme;
-
-        for (Malzeme malzeme : malzemeList) {
-
-            if (malzeme.getStatus().equals(Status.DUZENLEME_BEKLIYOR)) {
-
-                tempMalzeme = malzemeDuzenleRepository.findByMalzemeNo(malzeme.getId()).get();
-
-                Kategori kategori = new Kategori();
-                kategori.setKategori(malzeme.getKategori().getKategori() + " -> " + tempMalzeme.getKategori().getKategori());
-                malzeme.setTip(malzeme.getTip() + " -> " + tempMalzeme.getTip());
-                malzeme.setModel(malzeme.getModel() + " -> " + tempMalzeme.getModel());
-                malzeme.setIsim(malzeme.getIsim() + " -> " + tempMalzeme.getIsim());
-                malzeme.setNumara_boy(malzeme.getNumara_boy() + " -> " + tempMalzeme.getNumara_boy());
-                malzeme.setDurum_not(malzeme.getDurum_not() + " -> " + tempMalzeme.getDurum_not());
-            }
-        }
-        return malzemeList;
-    }
-
-    @Transactional
-    @GetMapping("/statuonay/reddet/{id}")
-    public String reddet(@PathVariable("id") Long id) {
+    /***
+     *
+     * @param id reject request item id
+     */
+    public void reject(Long id) {
         Optional<Malzeme> malzeme = malzemeRepository.findById(id);
         if (malzeme.isPresent()) {
             // eklenme onaylanmazsa tamamen sil
@@ -124,7 +135,5 @@ public class StatuController {
                 malzemeRepository.save(malzeme.get());
             }
         }
-        return "redirect:/statuonay";
     }
-
 }

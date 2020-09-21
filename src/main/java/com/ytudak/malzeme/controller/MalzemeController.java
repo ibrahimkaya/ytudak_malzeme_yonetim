@@ -1,6 +1,5 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.entity.Malzeme;
 import com.ytudak.malzeme.model.MalzemeDTO;
 import com.ytudak.malzeme.services.MalzemeService;
 import org.springframework.beans.factory.annotation.Autowired;
