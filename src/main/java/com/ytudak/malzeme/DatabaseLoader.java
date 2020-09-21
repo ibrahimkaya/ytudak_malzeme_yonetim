@@ -1,6 +1,6 @@
 package com.ytudak.malzeme;
 
-import com.ytudak.malzeme.model.*;
+import com.ytudak.malzeme.entity.*;
 import com.ytudak.malzeme.repository.KategoriRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.UserRepository;
@@ -149,17 +149,17 @@ public class DatabaseLoader implements CommandLineRunner {
         userRepository.save(admin);
 
         User user = new User();
-        admin.setUserName("user");
-        admin.setPassword(new BCryptPasswordEncoder().encode("1"));
-        admin.setActive(true);
-        admin.setRole("ROLE_USER");
+        user.setUserName("user");
+        user.setPassword(new BCryptPasswordEncoder().encode("1"));
+        user.setActive(true);
+        user.setRole("ROLE_USER");
         userRepository.save(user);
 
         User baskan = new User();
-        admin.setUserName("baskan");
-        admin.setPassword(new BCryptPasswordEncoder().encode("1"));
-        admin.setActive(true);
-        admin.setRole("ROLE_BASKAN");
+        baskan.setUserName("baskan");
+        baskan.setPassword(new BCryptPasswordEncoder().encode("1"));
+        baskan.setActive(true);
+        baskan.setRole("ROLE_BASKAN");
         userRepository.save(baskan);
 
     }
