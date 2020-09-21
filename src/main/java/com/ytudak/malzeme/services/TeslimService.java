@@ -19,9 +19,7 @@ import java.util.Optional;
 public class TeslimService {
 
     private ZimmetRepository zimmetRepository;
-
     private MalzemeRepository malzemeRepository;
-
     private TeslimRepository teslimRepository;
 
     @Autowired

@@ -22,7 +22,7 @@
     <br>
     <h4 class="h4 mb-3 font-weight-normal text-center" th:if="${param.success}"style="color: blue;">Kategori Oluşturuldu.</h4>
     <h4 class="h4 mb-3 font-weight-normal text-center" th:if="${param.fail}"style="color: red;">Hata Oluştu.</h4>
-    <form th:action="@{/kategoriekle}" method="post">
+    <form th:action="@{/kategoriEkle}" method="post">
         <div class="form-group">
             <label for="kategori">Kategori Adı</label>
             <input class="form-control" type="text" name="kategori" id="kategori" placeholder="Kategori Adı" required>

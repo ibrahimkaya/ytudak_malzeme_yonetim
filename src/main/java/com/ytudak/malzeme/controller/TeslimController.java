@@ -26,14 +26,14 @@ public class TeslimController {
         this.teslimService = teslimService;
     }
 
-    @GetMapping("/zimmetal")
+    @GetMapping("/zimmetAl")
     public String getZimmetList(Model model) {
 
         teslimService.getZimmetList(model);
         return "zimmetal";
     }
 
-    @PostMapping("/zimmetal/teslimAl")
+    @PostMapping("/zimmetAl/teslimAl")
     public String zimmetAl(Teslim teslim, Model model) {
 
         teslimService.zimmetAl(teslim, model);

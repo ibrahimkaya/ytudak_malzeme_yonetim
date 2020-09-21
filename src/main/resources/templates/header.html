@@ -14,9 +14,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li ><a href="/anasayfa">Anasayfa</a></li>
-                <li><a href="/liste">Listele</a></li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')" > <a href="/zimmetver">Zimmet Ver</a></li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/zimmetal">Zimmet Al</a></li>
+                <li><a href="/malzemeler">Listele</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')" > <a href="/zimmetVer">Zimmet Ver</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/zimmetAl">Zimmet Al</a></li>
                 <li><a href="/kayit">Geçmiş Kayıtlar</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -34,17 +34,17 @@
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a href="/malzemeekle">
+                            <a href="/malzemeEkle">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Malzeme Ekle
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a href="/malzemeduzenle">
+                            <a href="/malzemeDuzenle">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Malzeme Duzenle & Sil
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a href="/kategoriekle">
+                            <a href="/kategoriEkle">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Kategori Ekle
                             </a>
                         </li>

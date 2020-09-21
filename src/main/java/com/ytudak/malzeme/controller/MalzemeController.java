@@ -20,19 +20,19 @@ public class MalzemeController {
         this.malzemeService = malzemeService;
     }
 
-    @GetMapping("/malzemeekle")
+    @GetMapping("/malzemeEkle")
     public String findAll(Model model) {
         malzemeService.findAll(model);
         return "malzemeEkle";
     }
 
-    @PostMapping("/malzemeekle")
+    @PostMapping("/malzemeEkle")
     public String save(MalzemeDTO malzemeDTO, RedirectAttributes redirectAttributes) {
         malzemeService.save(malzemeDTO, redirectAttributes);
-        return "redirect:/malzemeekle";
+        return "redirect:/malzemeEkle";
     }
 
-    @GetMapping("/malzemeduzenle")
+    @GetMapping("/malzemeDuzenle")
     public String getEditableItems(Model model) {
         malzemeService.getEditableItems(model);
         return "malzemeDuzenle";

@@ -18,15 +18,15 @@ public class KategoriController {
         this.kategoriService = kategoriService;
     }
 
-    @GetMapping("/kategoriekle")
+    @GetMapping("/kategoriEkle")
     public String getAll(Model model) {
         kategoriService.getAll(model);
         return "kategoriEkle";
     }
 
-    @PostMapping("/kategoriekle")
+    @PostMapping("/kategoriEkle")
     public String save(Kategori kategori) {
         kategoriService.save(kategori);
-        return "redirect:/kategoriekle";
+        return "redirect:/kategoriEkle";
     }
 }

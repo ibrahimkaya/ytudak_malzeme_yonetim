@@ -27,13 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/favicon/**","/login").permitAll()
                 // giriş yapan herkes
-                .antMatchers("/kayit","/liste","/anasayfa").hasAnyRole("ADMIN","USER","BASKAN")
+                .antMatchers("/kayit","/malzemeler","/anasayfa").hasAnyRole("ADMIN","USER","BASKAN")
                 // sadece malzemeciler
-                .antMatchers("/zimmetver","/zimmetver/*","/zimmetver/*/*").hasRole("ADMIN")
-                .antMatchers("/zimmetal","/zimmetal/*","/zimmetal/*/*").hasRole("ADMIN")
+                .antMatchers("/zimmetVer","/zimmetVer/*","/zimmetVer/*/*").hasRole("ADMIN")
+                .antMatchers("/zimmetAl","/zimmetAl/*","/zimmetAl/*/*").hasRole("ADMIN")
                 .antMatchers("/teslim","/teslim/*","/teslim/*/*").hasRole("ADMIN")
-                .antMatchers("/malzemeekle","/malzemesil","/malzemeduzenle","/malzeme","/malzeme/*","/malzeme/*/*").hasRole("ADMIN")
-                .antMatchers("/kategoriekle").hasRole("ADMIN")
+                .antMatchers("/malzemeEkle","/malzemesil","/malzemeDuzenle","/malzeme","/malzeme/*","/malzeme/*/*").hasRole("ADMIN")
+                .antMatchers("/kategoriEkle").hasRole("ADMIN")
                 //sadece baskan
                 .antMatchers("/statuonay","/statuonay/onay","/statuonaysonuc").hasRole("BASKAN")
                 .anyRequest().authenticated()

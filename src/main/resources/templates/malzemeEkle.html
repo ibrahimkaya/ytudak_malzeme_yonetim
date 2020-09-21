@@ -21,7 +21,7 @@
     <h2>Malzeme Ekle</h2>
     <h4 class="h4 mb-3 font-weight-normal text-center" th:if="${param.success}"style="color: blue;">Malzeme Kaydı Oluşturuldu.</h4>
     <h4 class="h4 mb-3 font-weight-normal text-center" th:if="${param.fail}"style="color: red;">Hata Oluştu.</h4>
-    <form th:action="@{/malzemeekle}" method="post">
+    <form th:action="@{/malzemeEkle}" method="post">
         <div class="form-group">
             <label for="kategori">Kategori*</label>
             <select class="form-control" name="kategori" id="kategori" required>

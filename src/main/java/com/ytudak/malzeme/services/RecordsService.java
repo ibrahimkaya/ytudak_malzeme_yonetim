@@ -15,9 +15,7 @@ import java.util.List;
 public class RecordsService {
 
     private ZimmetRepository zimmetRepository;
-
     private TeslimRepository teslimRepository;
-
     private MalzemeRepository malzemeRepository;
 
     @Autowired

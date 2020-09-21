@@ -19,9 +19,7 @@ import java.util.Optional;
 public class MalzemeService {
 
     private MalzemeRepository malzemeRepository;
-
     private KategoriRepository kategoriRepository;
-
     private MalzemeDuzenleRepository malzemeDuzenleRepository;
 
     @Autowired
@@ -77,7 +75,7 @@ public class MalzemeService {
         Optional<MalzemeDuzenle> malzemeKontrol = malzemeDuzenleRepository.findById(id);
         if (malzemeKontrol.isPresent()) {
             redirectAttributes.addAttribute("istekvar", "");
-            return "redirect:/malzemeduzenle";
+            return "redirect:/malzemeDuzenle";
         }
         // yoksa devam et
         Optional<Malzeme> malzeme = malzemeRepository.findById(id);
@@ -88,7 +86,7 @@ public class MalzemeService {
             return "malzemeDuzenleForm";
         }
         // bu id ye sahip malzeme yoksa geri gonder
-        return "redirect:/malzemeduzenle";
+        return "redirect:/malzemeDuzenle";
     }
 
     /***
@@ -105,7 +103,7 @@ public class MalzemeService {
             // zaten silme isteği varsa
             if (malzeme.get().getStatus() == Status.SILME_BEKLIYOR) {
                 redirectAttributes.addAttribute("silmeistegivar", "");
-                return "redirect:/malzemeduzenle";
+                return "redirect:/malzemeDuzenle";
             }
             // malzeme durumunu degistir ve kaydet
             malzeme.get().setStatus(Status.SILME_BEKLIYOR);
@@ -114,7 +112,7 @@ public class MalzemeService {
         } else {
             redirectAttributes.addAttribute("silmefail", "");
         }
-        return "redirect:/malzemeduzenle";
+        return "redirect:/malzemeDuzenle";
     }
 
     /**
@@ -132,7 +130,7 @@ public class MalzemeService {
 
         if (!gelenMalzeme.isPresent()) {
             redirectAttributes.addAttribute("duzenlemefail", "");
-            return "redirect:/malzemeduzenle";
+            return "redirect:/malzemeDuzenle";
         }
 
         // güncelleme isteği olan malzemeyi düzenleme bekliyora çek
@@ -155,7 +153,7 @@ public class MalzemeService {
         malzemeDuzenleRepository.save(posibleNewData);
 
         redirectAttributes.addAttribute("duzenlemeSuccess", "");
-        return "redirect:/malzemeduzenle";
+        return "redirect:/malzemeDuzenle";
     }
 
 }

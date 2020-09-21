@@ -18,21 +18,21 @@ public class ZimmetVerController {
         this.zimmetverSevice = zimmetverSevice;
     }
 
-    @GetMapping("/zimmetver")
+    @GetMapping("/zimmetVer")
     public String getAll(Model model) {
 
         zimmetverSevice.getAll(model);
         return "zimmetver";
     }
 
-    @PostMapping("/zimmetver/zimmetle/onay")
+    @PostMapping("/zimmetVer/zimmetle/onay")
     public String zimmetOnay(ZimmetDTO zimmetDTO, Model model) {
 
         zimmetverSevice.zimmetOnay(zimmetDTO, model);
         return "sonuc";
     }
 
-    @PostMapping("/zimmetver/zimmetle")
+    @PostMapping("/zimmetVer/zimmetle")
     public String zimmetle(ZimmetDTO zimmetDTO, Model model) {
 
         zimmetverSevice.zimmetle(zimmetDTO, model);

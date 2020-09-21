@@ -17,7 +17,6 @@ import java.util.Optional;
 public class ZimmetVerSevice {
 
     private MalzemeRepository malzemeRepository;
-
     private ZimmetRepository zimmetRepository;
 
     @Autowired

@@ -12,7 +12,7 @@ public class ListeController {
     @Autowired
     private MalzemeRepository malzemeRepository;
 
-    @GetMapping("/liste")
+    @GetMapping("/malzemeler")
     public String listele(Model model) {
         model.addAttribute("malzemelist", malzemeRepository.findAll());
         return "liste";

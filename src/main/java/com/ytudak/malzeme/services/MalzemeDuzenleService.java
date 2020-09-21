@@ -19,7 +19,6 @@ import java.util.Optional;
 public class MalzemeDuzenleService {
 
     private MalzemeRepository malzemeRepository;
-
     private MalzemeDuzenleRepository malzemeDuzenleRepository;
 
     @Autowired
