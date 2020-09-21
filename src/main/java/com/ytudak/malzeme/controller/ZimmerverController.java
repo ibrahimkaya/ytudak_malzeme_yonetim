@@ -53,7 +53,12 @@ public class ZimmerverController {
                 successList.add(tempMalzeme.get());
 
                 //gelen zimmet bilgilerinden yeni bir zimmet objesi oluştur
-                zimmetRepository.save(new Zimmet(Long.valueOf(id), zimmet.getAlanKisi(), zimmet.getVerenMalzemeci(), zimmet.getVerilmeNot()));
+                Zimmet tempZimmet = new Zimmet();
+                tempZimmet.setMalzemeNo(Long.valueOf(id));
+                tempZimmet.setAlanKisi(zimmet.getAlanKisi());
+                tempZimmet.setVerenMalzemeci(zimmet.getVerenMalzemeci());
+                tempZimmet.setVerilmeNot(zimmet.getVerilmeNot());
+                zimmetRepository.save(tempZimmet);
 
             } else {
                 //malzeme zimmetlenemedi ise

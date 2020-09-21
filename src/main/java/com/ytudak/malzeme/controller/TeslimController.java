@@ -109,9 +109,18 @@ public class TeslimController {
                 successList.add(zimmetTemp);
 
                 //gelen teslim bilgilerinden yeni bir teslim objesi oluştur
-                teslimRepository.save(new Teslim(Long.valueOf(id), zimmetTemp.getAlanKisi(), zimmetTemp.getVerenMalzemeci(),zimmetTemp.getVerilmeTarihi(), zimmetTemp.getVerilmeNot(),
-                      teslim.getGetirenKisi(),teslim.getTeslimAlanMalzemeci(),teslim.getTeslimNot()  ));
+                Teslim teslimEdilenMalzeme = new Teslim();
+                teslimEdilenMalzeme.setMalzemeNo(Long.valueOf(id));
+                teslimEdilenMalzeme.setAlanKisi(zimmetTemp.getAlanKisi());
+                teslimEdilenMalzeme.setVerenMalzemeci(zimmetTemp.getVerenMalzemeci());
+                teslimEdilenMalzeme.setVerilmeTarihi(zimmetTemp.getVerilmeTarihi());
+                teslimEdilenMalzeme.setVerilmeNot(zimmetTemp.getVerilmeNot());
+                teslimEdilenMalzeme.setGetirenKisi(teslim.getGetirenKisi());
+                teslimEdilenMalzeme.setTeslimAlanMalzemeci(teslim.getTeslimAlanMalzemeci());
+                teslimEdilenMalzeme.setTeslimNot(teslim.getTeslimNot());
+                teslimRepository.save(teslimEdilenMalzeme);
 
+                //artık bu malzeme zimmetli değil
                 zimmetRepository.deleteById(zimmetTemp.getId());
 
             } else {

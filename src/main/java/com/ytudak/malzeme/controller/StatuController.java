@@ -92,7 +92,9 @@ public class StatuController {
             if (malzeme.getStatus().equals(Status.DUZENLEME_BEKLIYOR)) {
 
                 tempMalzeme = malzemeDuzenleRepository.findByMalzemeNo(malzeme.getId()).get();
-                malzeme.setKategori(new Kategori(malzeme.getKategori().getKategori() + " -> " + tempMalzeme.getKategori().getKategori()));
+
+                Kategori kategori = new Kategori();
+                kategori.setKategori(malzeme.getKategori().getKategori() + " -> " + tempMalzeme.getKategori().getKategori());
                 malzeme.setTip(malzeme.getTip() + " -> " + tempMalzeme.getTip());
                 malzeme.setModel(malzeme.getModel() + " -> " + tempMalzeme.getModel());
                 malzeme.setIsim(malzeme.getIsim() + " -> " + tempMalzeme.getIsim());

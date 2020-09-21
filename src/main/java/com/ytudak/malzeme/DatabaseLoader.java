@@ -26,32 +26,141 @@ public class DatabaseLoader implements CommandLineRunner {
         this.userRepository = userRepository;
     }
 
+    /*
+     populate DB for testing
+     */
     @Override
     public void run(String... args) throws Exception {
-        this.kategoriRepository.save(new Kategori("ip"));
-        this.kategoriRepository.save(new Kategori("geleneksel"));
-        this.kategoriRepository.save(new Kategori("cadir"));
-        this.kategoriRepository.save(new Kategori("takoz"));
+        Kategori kategoritemp1 = new Kategori();
+        kategoritemp1.setKategori("ip");
+        kategoriRepository.save(kategoritemp1);
 
-        //(Kategori kategori, String tip, String marka, String isim, String numara_boy, String durum_not, Boolean aktiflik)
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "pembe", "60m", "temiz", true, Status.KULLANILABILIR));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "mavi", "60m", "temiz", true, Status.KULLANILABILIR));
+        Kategori kategoritemp2 = new Kategori();
+        kategoritemp2.setKategori("geleneksel");
+        kategoriRepository.save(kategoritemp2);
 
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "sarı", "50m", "performans", true, Status.KULLANILABILIR));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(1)).get(), "yarım ip", "beal", "kırmızı", "50m", "performans", true, Status.KULLANILABILIR));
+        Kategori kategoritemp3 = new Kategori();
+        kategoritemp3.setKategori("cadir");
+        kategoriRepository.save(kategoritemp3);
 
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "", "bd", "mikro", "0.1", " ", true, Status.KULLANILABILIR));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "mikro", "0.2", " ", true, Status.KULLANILAMAZ));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "bd", "", "3", " ", true, Status.ONAY_BEKLIYOR));
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(2)).get(), "cam", "dmm", "", "2", " yeni", true, Status.SILME_BEKLIYOR));
+        Kategori kategoritemp4 = new Kategori();
+        kategoritemp4.setKategori("takoz");
+        kategoriRepository.save(kategoritemp4);
 
-        this.malzemeRepository.save(new Malzeme(kategoriRepository.findById(Long.valueOf(3)).get(), "5 mevsim", "husky", "figther", "F3", "kapı fermuar has.", true, Status.KULLANILABILIR));
 
-        //(String alanKisi, String verenMalzemeci, , String verilmeNot)
+        //(Kategori kategori, String tip, String model, String isim, String numara_boy, String durum_not, Boolean aktiflik)
 
-        this.userRepository.save(new User("admin", new BCryptPasswordEncoder().encode("1"), true, "ROLE_ADMIN"));
-        this.userRepository.save(new User("user", new BCryptPasswordEncoder().encode("123"), true, "ROLE_USER"));
-        this.userRepository.save(new User("baskan", new BCryptPasswordEncoder().encode("1"), true, "ROLE_BASKAN"));
+        Malzeme malzeme = new Malzeme();
+        malzeme.setKategori(kategoriRepository.findById(1L).get());
+        malzeme.setTip("yarım ip");
+        malzeme.setModel("beal");
+        malzeme.setIsim("pembe");
+        malzeme.setNumara_boy("60m");
+        malzeme.setDurum_not("temiz");
+        malzeme.setAktiflik(true);
+        malzeme.setStatus(Status.KULLANILABILIR);
+        malzemeRepository.save(malzeme);
+
+        Malzeme malzeme1 = new Malzeme();
+        malzeme1.setKategori(kategoriRepository.findById(1L).get());
+        malzeme1.setTip("yarım ip");
+        malzeme1.setModel("beal");
+        malzeme1.setIsim("mavi");
+        malzeme1.setNumara_boy("60m");
+        malzeme1.setDurum_not("temiz");
+        malzeme1.setAktiflik(true);
+        malzeme1.setStatus(Status.KULLANILABILIR);
+        malzemeRepository.save(malzeme1);
+
+        Malzeme malzeme2 = new Malzeme();
+        malzeme2.setKategori(kategoriRepository.findById(1L).get());
+        malzeme2.setTip("yarım ip");
+        malzeme2.setModel("beal");
+        malzeme2.setIsim("sarı");
+        malzeme2.setNumara_boy("50");
+        malzeme2.setDurum_not("performans");
+        malzeme2.setAktiflik(true);
+        malzeme2.setStatus(Status.KULLANILABILIR);
+        malzemeRepository.save(malzeme2);
+
+        Malzeme malzeme3 = new Malzeme();
+        malzeme3.setKategori(kategoriRepository.findById(1L).get());
+        malzeme3.setTip("yarım ip");
+        malzeme3.setModel("beal");
+        malzeme3.setIsim("kırmızı");
+        malzeme3.setNumara_boy("50");
+        malzeme3.setDurum_not("performans");
+        malzeme3.setAktiflik(true);
+        malzeme3.setStatus(Status.KULLANILABILIR);
+        malzemeRepository.save(malzeme3);
+
+
+        Malzeme malzeme4 = new Malzeme();
+        malzeme4.setKategori(kategoriRepository.findById(2L).get());
+        malzeme4.setTip("");
+        malzeme4.setModel("bd");
+        malzeme4.setIsim("mikro");
+        malzeme4.setNumara_boy("0.1");
+        malzeme4.setDurum_not("");
+        malzeme4.setAktiflik(true);
+        malzeme4.setStatus(Status.KULLANILABILIR);
+        malzemeRepository.save(malzeme4);
+
+
+        Malzeme malzeme5 = new Malzeme();
+        malzeme5.setKategori(kategoriRepository.findById(2L).get());
+        malzeme5.setTip("");
+        malzeme5.setModel("bd");
+        malzeme5.setIsim("mikro");
+        malzeme5.setNumara_boy("0.2");
+        malzeme5.setDurum_not("");
+        malzeme5.setStatus(Status.KULLANILAMAZ);
+        malzeme4.setAktiflik(false);
+        malzemeRepository.save(malzeme5);
+
+
+        Malzeme malzeme6 = new Malzeme();
+        malzeme6.setKategori(kategoriRepository.findById(2L).get());
+        malzeme6.setTip("");
+        malzeme6.setModel("bd");
+        malzeme6.setIsim("mikro");
+        malzeme6.setNumara_boy("1");
+        malzeme6.setDurum_not("");
+        malzeme6.setStatus(Status.SILME_BEKLIYOR);
+        malzemeRepository.save(malzeme6);
+
+
+        Malzeme malzeme7 = new Malzeme();
+        malzeme7.setKategori(kategoriRepository.findById(3L).get());
+        malzeme7.setTip("5 mevsim");
+        malzeme7.setModel("husky");
+        malzeme7.setIsim("figther");
+        malzeme7.setNumara_boy("F3");
+        malzeme7.setDurum_not("kapı fermuar has");
+        malzeme7.setAktiflik(true);
+        malzeme7.setStatus(Status.KULLANILABILIR);
+        malzemeRepository.save(malzeme7);
+
+        User admin = new User();
+        admin.setUserName("admin");
+        admin.setPassword(new BCryptPasswordEncoder().encode("1"));
+        admin.setActive(true);
+        admin.setRole("ROLE_ADMIN");
+        userRepository.save(admin);
+
+        User user = new User();
+        admin.setUserName("user");
+        admin.setPassword(new BCryptPasswordEncoder().encode("1"));
+        admin.setActive(true);
+        admin.setRole("ROLE_USER");
+        userRepository.save(user);
+
+        User baskan = new User();
+        admin.setUserName("baskan");
+        admin.setPassword(new BCryptPasswordEncoder().encode("1"));
+        admin.setActive(true);
+        admin.setRole("ROLE_BASKAN");
+        userRepository.save(baskan);
 
     }
 }
