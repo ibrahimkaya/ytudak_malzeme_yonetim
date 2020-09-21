@@ -1,12 +1,8 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.Kategori;
-import com.ytudak.malzeme.model.Malzeme;
-import com.ytudak.malzeme.model.MalzemeDuzenle;
-import com.ytudak.malzeme.model.Status;
-import com.ytudak.malzeme.repository.KategoriRepository;
-import com.ytudak.malzeme.repository.MalzemeDuzenleRepository;
-import com.ytudak.malzeme.repository.MalzemeRepository;
+import com.ytudak.malzeme.entity.Malzeme;
+import com.ytudak.malzeme.model.MalzemeDTO;
+import com.ytudak.malzeme.services.MalzemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,132 +11,47 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
-
 @Controller
 public class MalzemeController {
-    @Autowired
-    MalzemeRepository malzemeRepository;
+
+    private MalzemeService malzemeService;
 
     @Autowired
-    KategoriRepository kategoriRepository;
+    public MalzemeController(MalzemeService malzemeService) {
+        this.malzemeService = malzemeService;
+    }
 
-    @Autowired
-    MalzemeDuzenleRepository malzemeDuzenleRepository;
-
-    // malzeme ekleme sayfası
     @GetMapping("/malzemeekle")
-    public String malzemeEkle(Model model) {
-        // kategori için dropdown list yapicam
-        model.addAttribute("kategoriler", kategoriRepository.findAll());
+    public String findAll(Model model) {
+        malzemeService.findAll(model);
         return "malzemeEkle";
     }
 
-    // malzeme ekleme formu buraya request atıyor
     @PostMapping("/malzemeekle")
-    public String malzemeEkle(Malzeme malzeme, RedirectAttributes redirectAttributes) {
-        // kategoriyi al
-        String kategori = malzeme.getKategori().getKategori();
-        //kategori yi dbden al ve objede setle
-        Optional<Kategori> kategori1 = kategoriRepository.findByKategori(kategori);
-        // kategori varsa
-        if (kategori1.isPresent()) {
-            // malzemeti setle ve kaydet
-            malzeme.setKategori(kategori1.get());
-            malzeme.setAktiflik(true);
-            // başkan onayına sun
-            malzeme.setStatus(Status.ONAY_BEKLIYOR);
-            malzemeRepository.save(malzeme);
-            redirectAttributes.addAttribute("success", "");
-        } else { // yoksa faille
-            redirectAttributes.addAttribute("fail", "");
-        }
-        // duzenleme sayfasına geri gönder
+    public String save(MalzemeDTO malzemeDTO, RedirectAttributes redirectAttributes) {
+        malzemeService.save(malzemeDTO, redirectAttributes);
         return "redirect:/malzemeekle";
     }
 
-    // malzeme duzenleme sayfasi
     @GetMapping("/malzemeduzenle")
-    public String malzemeDuzenle(Model model) {
-        // malzeme listesini yollla
-        model.addAttribute("malzemelist", malzemeRepository.findEditableItems());
+    public String getEditableItems(Model model) {
+        malzemeService.getEditableItems(model);
         return "malzemeDuzenle";
     }
 
-    //
     @GetMapping("/malzeme/duzenle/{id}")
-    public String malzemeDuzenleRequest(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
-        // malzeme icin duzenleme istegi zaten var mi?
-        Optional<MalzemeDuzenle> malzemeKontrol = malzemeDuzenleRepository.findById(id);
-        if(malzemeKontrol.isPresent()){
-            redirectAttributes.addAttribute("istekvar","");
-            return "redirect:/malzemeduzenle";
-        }
-
-        // yoksa devam et
-        Optional<Malzeme> malzeme = malzemeRepository.findById(id);
-        if (malzeme.isPresent()) {
-            // duzenleme sayfasina secilen malzeme bilgilerini gönder
-            model.addAttribute("kategoriler", kategoriRepository.findAll());
-            model.addAttribute("secilenMalzeme", malzeme.get());
-            return "malzemeDuzenleForm";
-        }
-        // bu id ye sahip malzeme yoksa geri gonder
-        return "redirect:/malzemeduzenle";
+    public String getUpdate(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        return malzemeService.getUpdateInfo(id, model, redirectAttributes);
     }
 
-    // malzeme silme için request al
     @GetMapping("/malzeme/sil/{id}")
-    public String malzemeSilRequest(Malzeme malzeme, RedirectAttributes redirectAttributes) {
-        //gelen malzemeyi al
-        Optional<Malzeme> tempMalzeme = malzemeRepository.findById(malzeme.getId());
-        if (tempMalzeme.isPresent()) {
-            // zaten silme isteği varsa
-            if(tempMalzeme.get().getStatus() == Status.SILME_BEKLIYOR){
-                redirectAttributes.addAttribute("silmeistegivar", "");
-                return "redirect:/malzemeduzenle";
-            }
-            // malzeme durumunu degistir ve kaydet
-            tempMalzeme.get().setStatus(Status.SILME_BEKLIYOR);
-            malzemeRepository.save(tempMalzeme.get());
-            redirectAttributes.addAttribute("silmesuccess", "");
-        } else {
-            redirectAttributes.addAttribute("silmefail", "");
-        }
-
-        return "redirect:/malzemeduzenle";
+    public String delete(MalzemeDTO malzemeDTO, RedirectAttributes redirectAttributes) {
+        return malzemeService.delete(malzemeDTO, redirectAttributes);
     }
 
     @PostMapping("/malzeme/duzenle")
-    public String malzemeDuzenleRequest(Malzeme malzeme, RedirectAttributes redirectAttributes) {
-        // gelen malzemeyi al
-        Optional<Malzeme> gelenMalzeme = malzemeRepository.findById(malzeme.getId());
-        Malzeme guncellenecek = gelenMalzeme.get();
-        // eger boyle bir malzem yoksa hata donsun
-        if(!gelenMalzeme.isPresent()){
-            redirectAttributes.addAttribute("duzenlemefail","");
-            return "redirect:/malzemeduzenle";
-        }
+    public String update(MalzemeDTO malzemeDTO, RedirectAttributes redirectAttributes) {
 
-        // yeni statü setle
-        guncellenecek.setStatus(Status.DUZENLEME_BEKLIYOR);
-        // update et
-        malzemeRepository.save(gelenMalzeme.get());
-
-        // duzenlecekler tablosuna eklenecek olan malzeme
-        MalzemeDuzenle duzenlenecek = new MalzemeDuzenle();
-        duzenlenecek.setMalzemeNo(malzeme.getId());
-        duzenlenecek.setKategori(kategoriRepository.findByKategori(malzeme.getKategori().getKategori()).get());
-        duzenlenecek.setTip(malzeme.getTip());
-        duzenlenecek.setModel(malzeme.getModel());
-        duzenlenecek.setIsim(malzeme.getIsim());
-        duzenlenecek.setNumara_boy(malzeme.getNumara_boy());
-        duzenlenecek.setDurum_not(malzeme.getDurum_not());
-        duzenlenecek.setAktiflik(malzeme.getAktiflik());
-        duzenlenecek.setStatus(Status.DUZENLEME_BEKLIYOR);
-        // duzenlenecek tablosuna ekle
-        malzemeDuzenleRepository.save(duzenlenecek);
-        redirectAttributes.addAttribute("duzenlemeSuccess","");
-        return "redirect:/malzemeduzenle";
+        return malzemeService.update(malzemeDTO, redirectAttributes);
     }
 }
