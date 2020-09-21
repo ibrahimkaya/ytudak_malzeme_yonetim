@@ -1,7 +1,7 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.Malzeme;
-import com.ytudak.malzeme.model.Zimmet;
+import com.ytudak.malzeme.entity.Malzeme;
+import com.ytudak.malzeme.entity.Zimmet;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import com.ytudak.malzeme.repository.ZimmetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,16 +53,21 @@ public class ZimmerverController {
                 successList.add(tempMalzeme.get());
 
                 //gelen zimmet bilgilerinden yeni bir zimmet objesi oluştur
-                zimmetRepository.save(new Zimmet(Long.valueOf(id), zimmet.getAlanKisi(), zimmet.getVerenMalzemeci(), zimmet.getVerilmeNot()));
+                Zimmet tempZimmet = new Zimmet();
+                tempZimmet.setMalzemeNo(Long.valueOf(id));
+                tempZimmet.setAlanKisi(zimmet.getAlanKisi());
+                tempZimmet.setVerenMalzemeci(zimmet.getVerenMalzemeci());
+                tempZimmet.setVerilmeNot(zimmet.getVerilmeNot());
+                zimmetRepository.save(tempZimmet);
 
             } else {
                 //malzeme zimmetlenemedi ise
                 hataList.add(tempMalzeme.get());
             }
 
-            model.addAttribute("hataList",hataList);
+            model.addAttribute("hataList", hataList);
             model.addAttribute("successList", successList);
-            model.addAttribute("zimmet",zimmet);
+            model.addAttribute("zimmet", zimmet);
         }
         // return degisecek
         return "sonuc";

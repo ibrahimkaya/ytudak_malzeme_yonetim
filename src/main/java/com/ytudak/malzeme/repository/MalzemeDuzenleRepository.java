@@ -1,10 +1,8 @@
 package com.ytudak.malzeme.repository;
 
 
-import com.ytudak.malzeme.model.MalzemeDuzenle;
+import com.ytudak.malzeme.entity.MalzemeDuzenle;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 

@@ -1,12 +1,11 @@
-package com.ytudak.malzeme.services;
+package com.ytudak.malzeme.config;
 
-import com.ytudak.malzeme.model.User;
+import com.ytudak.malzeme.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

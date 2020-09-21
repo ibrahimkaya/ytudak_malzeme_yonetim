@@ -1,6 +1,6 @@
-package com.ytudak.malzeme.services;
+package com.ytudak.malzeme.config;
 
-import com.ytudak.malzeme.model.User;
+import com.ytudak.malzeme.entity.User;
 import com.ytudak.malzeme.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

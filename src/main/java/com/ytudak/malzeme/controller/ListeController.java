@@ -1,20 +1,11 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.Malzeme;
-import com.ytudak.malzeme.model.MalzemeDuzenle;
-import com.ytudak.malzeme.model.Status;
-import com.ytudak.malzeme.model.Zimmet;
 import com.ytudak.malzeme.repository.MalzemeDuzenleRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ListeController {

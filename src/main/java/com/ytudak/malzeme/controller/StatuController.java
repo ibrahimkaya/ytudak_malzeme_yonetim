@@ -1,6 +1,6 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.*;
+import com.ytudak.malzeme.entity.*;
 import com.ytudak.malzeme.repository.MalzemeDuzenleRepository;
 import com.ytudak.malzeme.repository.MalzemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +92,9 @@ public class StatuController {
             if (malzeme.getStatus().equals(Status.DUZENLEME_BEKLIYOR)) {
 
                 tempMalzeme = malzemeDuzenleRepository.findByMalzemeNo(malzeme.getId()).get();
-                malzeme.setKategori(new Kategori(malzeme.getKategori().getKategori() + " -> " + tempMalzeme.getKategori().getKategori()));
+
+                Kategori kategori = new Kategori();
+                kategori.setKategori(malzeme.getKategori().getKategori() + " -> " + tempMalzeme.getKategori().getKategori());
                 malzeme.setTip(malzeme.getTip() + " -> " + tempMalzeme.getTip());
                 malzeme.setModel(malzeme.getModel() + " -> " + tempMalzeme.getModel());
                 malzeme.setIsim(malzeme.getIsim() + " -> " + tempMalzeme.getIsim());

@@ -1,7 +1,7 @@
 package com.ytudak.malzeme.controller;
 
-import com.ytudak.malzeme.model.Kategori;
-import com.ytudak.malzeme.repository.KategoriRepository;
+import com.ytudak.malzeme.entity.Kategori;
+import com.ytudak.malzeme.services.KategoriService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,17 +11,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class KategoriController {
 
+    private KategoriService kategoriService;
+
     @Autowired
-    KategoriRepository kategoriRepository;
+    public KategoriController(KategoriService kategoriService) {
+        this.kategoriService = kategoriService;
+    }
 
     @GetMapping("/kategoriekle")
-    public String kategoriEkle(Model model){
-        model.addAttribute("kategoriler",kategoriRepository.findAll());
+    public String getAll(Model model) {
+        kategoriService.getAll(model);
         return "kategoriEkle";
     }
+
     @PostMapping("/kategoriekle")
-    public String kategoriEklePost(Kategori kategori){
-        kategoriRepository.save(kategori);
+    public String save(Kategori kategori) {
+        kategoriService.save(kategori);
         return "redirect:/kategoriekle";
     }
 }

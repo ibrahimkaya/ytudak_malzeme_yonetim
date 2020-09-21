@@ -47,11 +47,11 @@
                     <td th:case="false">Verilmiş</td>
                 </div>
                 <div th:switch="${malzeme.status}">
-                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
-                    <td th:case="${T(com.ytudak.malzeme.model.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
-                    <td th:case="${T(com.ytudak.malzeme.model.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
-                    <td th:case="${T(com.ytudak.malzeme.model.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
-                    <td th:case="${T(com.ytudak.malzeme.model.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.entity.Status).KULLANILABILIR}" style="color: green">Kullanılabilir</td>
+                    <td th:case="${T(com.ytudak.malzeme.entity.Status).KULLANILAMAZ}" style="color: red;">Kullanılamaz</td>
+                    <td th:case="${T(com.ytudak.malzeme.entity.Status).ONAY_BEKLIYOR}" style="color: blue">Eklenme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.entity.Status).SILME_BEKLIYOR}" style="color: blue">Silinme Onayı Bekliyor</td>
+                    <td th:case="${T(com.ytudak.malzeme.entity.Status).DUZENLEME_BEKLIYOR}" style="color: blue">Düzenleme Onayı Bekliyor</td>
                 </div>
                 <td>
                     <a th:href="@{/statuonay/reddet/{id}(id=${malzeme.id})}">
