@@ -18,8 +18,7 @@ public class RecordsController {
 
     @GetMapping("/kayit")
     public String records(Model model) {
-        model = recordsService.records(model);
-
+        recordsService.records(model);
         return "kayit";
     }
 }

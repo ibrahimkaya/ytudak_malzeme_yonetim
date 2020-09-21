@@ -34,7 +34,7 @@ public class RecordsService {
      * @return model
      */
 
-    public Model records(Model model) {
+    public void records(Model model) {
 
         List<Zimmet> zimmetList = zimmetRepository.findAll();
         List<Teslim> teslimList = teslimRepository.findAll();
@@ -49,6 +49,5 @@ public class RecordsService {
 
         model.addAttribute("zimmetList", zimmetList);
         model.addAttribute("teslimList", teslimList);
-        return model;
     }
 }
