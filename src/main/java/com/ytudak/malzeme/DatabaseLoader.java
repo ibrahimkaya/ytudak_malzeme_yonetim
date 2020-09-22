@@ -29,8 +29,10 @@ public class DatabaseLoader implements CommandLineRunner {
     /*
      populate DB for testing
      */
+
     @Override
     public void run(String... args) throws Exception {
+        /*
         Kategori kategoritemp1 = new Kategori();
         kategoritemp1.setKategori("ip");
         kategoriRepository.save(kategoritemp1);
@@ -140,7 +142,7 @@ public class DatabaseLoader implements CommandLineRunner {
         malzeme7.setAktiflik(true);
         malzeme7.setStatus(Status.KULLANILABILIR);
         malzemeRepository.save(malzeme7);
-
+*/
         User admin = new User();
         admin.setUserName("admin");
         admin.setPassword(new BCryptPasswordEncoder().encode("1"));
@@ -150,7 +152,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
         User user = new User();
         user.setUserName("user");
-        user.setPassword(new BCryptPasswordEncoder().encode("1"));
+        user.setPassword(new BCryptPasswordEncoder().encode("1982"));
         user.setActive(true);
         user.setRole("ROLE_USER");
         userRepository.save(user);
