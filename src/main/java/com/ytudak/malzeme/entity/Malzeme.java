@@ -41,6 +41,5 @@ public class Malzeme {
     /***
      * Malzemenin kulanılabilir silinme gibi durumlarını temsil eder
      */
-    @Enumerated(EnumType.STRING)
     private Status status;
 }
