@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <div th:replace="favicon :: favicon"></div>
+        <title>Profil</title>
+    </head>
+<body>
+
+<div th:insert="header:: menu"></div>
+
+<div class="container">
+    <h2>Profil</h2>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.success}" style="color: green;">Parola
+        güncellendi!</h6>
+    <h6 class="h3 mb-3 font-weight-normal text-center" th:if="${param.fail}" style="color: red;">Parola güncellemede
+        hata oluştu! Eski parolanızı doğru girdiğinizden emin olun!</h6>
+    <hr>
+    <br>
+    <div class="container">
+        <div class="row">
+            <form th:action="@{/parolaGuncelle}" method="post">
+                <div class="form-group">
+                    <label for="password">Yeni Parola</label>
+                    <input class="form-control" type="password" name="password" id="password" minlength="6"
+                           placeholder="Yeni Parolanız" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" id="submit">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

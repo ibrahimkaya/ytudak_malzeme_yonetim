@@ -28,8 +28,13 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li sec:authorize="hasAnyRole('ROLE_BASKAN','ROLE_ADMIN')">
+                            <a href="/profil">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Profil Bilgilerim
+                            </a>
+                        </li>
                         <li sec:authorize="hasRole('ROLE_BASKAN')">
-                            <a href="/onay/malzemeDuzenle ">
+                            <a href="/onay/malzemeDuzenle">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Beklemedeki Onaylar
                             </a>
                         </li>

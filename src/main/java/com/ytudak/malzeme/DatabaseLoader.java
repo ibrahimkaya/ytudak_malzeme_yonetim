@@ -19,7 +19,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (!userRepository.existsUserByUsername("admin")) {
+        if (!userRepository.existsUserByUserName("admin")) {
             User admin = new User();
             admin.setUserName("admin");
             admin.setPassword(new BCryptPasswordEncoder().encode("1"));
@@ -27,15 +27,15 @@ public class DatabaseLoader implements CommandLineRunner {
             admin.setRole("ROLE_ADMIN");
             userRepository.save(admin);
         }
-        if (!userRepository.existsUserByUsername("user")) {
+        if (!userRepository.existsUserByUserName("ytudak")) {
             User user = new User();
-            user.setUserName("user");
+            user.setUserName("ytudak");
             user.setPassword(new BCryptPasswordEncoder().encode("1982"));
             user.setActive(true);
             user.setRole("ROLE_USER");
             userRepository.save(user);
         }
-        if (!userRepository.existsUserByUsername("baskan")) {
+        if (!userRepository.existsUserByUserName("baskan")) {
             User baskan = new User();
             baskan.setUserName("baskan");
             baskan.setPassword(new BCryptPasswordEncoder().encode("1"));
