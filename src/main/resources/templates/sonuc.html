@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-        <div th:replace="favicon :: favicon"></div>
-        <title>Sonuç Listeleri</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <div th:replace="favicon :: favicon"></div>
+    <title>Sonuç Listeleri</title>
+</head>
 <body>
 
 <div th:insert="header:: menu"></div>
 
 <div class="container">
-    <h2>Basarili sonuclar</h2>
+    <h2>Başarılı İşlemler</h2>
     <div class="table-responsive">
         <table id="successTable" class="table table-striped">
             <thead>
@@ -43,52 +43,52 @@
 
     </div>
     <hr>
-<div  th:if= "${hataList.size() != 0}">
-    <h2>hata olan sonuclar</h2>
-    <div class="table-responsive">
-        <table id="failTable" class="table table-striped">
-            <thead>
-            <tr style="font-weight: bold;">
-                <td scope=" col">#</td>
-                <td scope=" col">Kategori</td>
-                <td scope=" col">Tip</td>
-                <td scope=" col">Model</td>
-                <td scope=" col">İsim</td>
-                <td scope=" col">Numara-Boy</td>
-            </tr>
-            </thead>
-            <tbody >
-            <tr th:each="malzeme:${hataList}">
-                <td th:text="${malzeme.id}"></td>
-                <td th:text="${malzeme.kategori.kategori}"></td>
-                <td th:text="${malzeme.tip}"></td>
-                <td th:text="${malzeme.model}"></td>
-                <td th:text="${malzeme.isim}"></td>
-                <td th:text="${malzeme.numara_boy}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-        <hr>
-</div>
-        <h2>Zimmet kisi bilgisi</h2>
+    <div th:if="${hataList.size() != 0}">
+        <h2>Hatalı İşlemler</h2>
         <div class="table-responsive">
-            <table id="zimmetTable" class="table table-striped">
+            <table id="failTable" class="table table-striped">
                 <thead>
                 <tr style="font-weight: bold;">
-                    <td scope=" col">Alan kişi</td>
-                    <td scope=" col">Veren Malzemeci</td>
-                    <td scope=" col">Verilme Not</td>
+                    <td scope=" col">#</td>
+                    <td scope=" col">Kategori</td>
+                    <td scope=" col">Tip</td>
+                    <td scope=" col">Model</td>
+                    <td scope=" col">İsim</td>
+                    <td scope=" col">Numara-Boy</td>
                 </tr>
                 </thead>
-                <tbody >
-                <tr th:each="malzeme:${zimmet}">
-                    <td th:text="${zimmet.alanKisi}"></td>
-                    <td th:text="${zimmet.verenMalzemeci}"></td>
-                    <td th:text="${zimmet.verilmeNot}"></td>
+                <tbody>
+                <tr th:each="malzeme:${hataList}">
+                    <td th:text="${malzeme.id}"></td>
+                    <td th:text="${malzeme.kategori.kategori}"></td>
+                    <td th:text="${malzeme.tip}"></td>
+                    <td th:text="${malzeme.model}"></td>
+                    <td th:text="${malzeme.isim}"></td>
+                    <td th:text="${malzeme.numara_boy}"></td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <hr>
+    </div>
+    <h2>Zimmetlenen Kişi Bilgisi</h2>
+    <div class="table-responsive">
+        <table id="zimmetTable" class="table table-striped">
+            <thead>
+            <tr style="font-weight: bold;">
+                <td scope=" col">Alan kişi</td>
+                <td scope=" col">Veren Malzemeci</td>
+                <td scope=" col">Verilme Not</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="malzeme:${zimmet}">
+                <td th:text="${zimmet.alanKisi}"></td>
+                <td th:text="${zimmet.verenMalzemeci}"></td>
+                <td th:text="${zimmet.verilmeNot}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -96,15 +96,17 @@
 <script>
     $(document).ready(function () {
         $('#successTable').DataTable({
-            "info":     false
+            "info": false,
+            "paging": false,
         });
         $('#failTable').DataTable({
-            "info":     false
+            "info": false,
+            "paging": false,
         });
         $('#zimmetTable').DataTable({
-            "paging":   false,
+            "paging": false,
             "ordering": false,
-            "info":     false,
+            "info": false,
             "search": false,
             "searching": false
         });

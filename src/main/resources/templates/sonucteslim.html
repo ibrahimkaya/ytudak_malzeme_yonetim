@@ -16,7 +16,7 @@
 <div th:insert="header:: menu"></div>
 
 <div class="container">
-    <h2>Basarili sonuclar</h2>
+    <h2>Başarılı İşlemler</h2>
     <div class="table-responsive">
         <table id="myTable" class="table table-striped">
             <thead>
@@ -52,29 +52,12 @@
                 <td th:text="${zimmet.malzeme.durum_not}"></td>
             </tr>
             </tbody>
-
-            <tfoot>
-            <tr>
-                <th> Alan Kişi</th>
-                <th> Veren Malzemeci</th>
-                <th> Verilme Tarihi</th>
-                <th> Verilme Not</th>
-
-                <th> id </th>
-                <th> kategori</th>
-                <th> Tip</th>
-                <th> Model</th>
-                <th> isim</th>
-                <th> numara-boy</th>
-                <th> not</th>
-            </tr>
-            </tfoot>
         </table>
 
     </div>
     <hr>
     <div  th:if= "${hataList.size() != 0}">
-        <h2>hata olan sonuclar</h2>
+        <h2>Hatalı İşlemler</h2>
         <div class="table-responsive">
             <table id="failTable" class="table table-striped">
                 <thead>
@@ -101,7 +84,7 @@
         </div>
         <hr>
     </div>
-    <h2>Teslim alınma kisi bilgisi</h2>
+    <h2>Teslim Alma Kişi Bilgileri</h2>
     <div class="table-responsive">
         <table id="zimmetTable" class="table table-striped">
             <thead>
